@@ -1,11 +1,39 @@
-/* test */
+/* v.1 */
 :root {
     --light-foreground: #060e0f;
-    --light-startcolor: #EAF7FA;
     --light-background: #fcfdfd;
     --light-primary: #4aa6ba;
     --light-secondary: #9690d5;
     --light-accent: #886bc7;
+    --light-text-gradient: linear-gradient(
+        90deg,
+        var(--light-primary) 0%,
+        var(--light-accent) 100%
+    );
+    
+    --light-primary-foreground: #EAF7FA;
+    --light-secondary-foreground: #F6F5FF;
+    --light-accent-foreground: #EDE5FF;
+
+    --overwhelmingly-negative: #B60000;
+    --very-negative: #F60000;
+    --negative: #FF772D;
+    --mostly-negative: #FFB200;
+    --mixed: #FFF200;
+    --mostly-positive: #C6FF36;
+    --positive: #70FF69;
+    --very-positive: #0DFF00;
+    --overwhalmingly-positive: #00D624;
+
+    --very-positive-foreground: #067E00;
+    --very-negative-foreground: #FFD6D6;
+    --positive-foreground: #067900;
+    --overwhalmingly-positive-foreground: #006C12;
+    --overwhelmingly-negative-foreground: #FFE4E4;
+    --negative-foreground: #FFECE2;
+    --mostly-positive-foreground: #4E6D00;
+    --mostly-negative-foreground: #FFF7E4;
+    --mixed-foreground: #666600;
 
     --font-thin: 100;
     --font-extralight: 200;
@@ -76,11 +104,7 @@ main {
             font-weight: var(--font-black);
             font-size: 32px;
 
-            background: linear-gradient(
-                90deg,
-                var(--light-primary) 0%,
-                var(--light-accent) 100%
-            );
+            background: var(--light-text-gradient);
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -93,7 +117,7 @@ main {
     }
 }
 
-.main-navigation {
+nav.mobile-only {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -119,8 +143,8 @@ main {
         gap: 4px;
 
         & > svg {
-            width: 25px;
-            height: 25px;
+            width: 24px;
+            height: 24px;
 
             transition: color 200ms ease-out;
 
@@ -160,4 +184,65 @@ button.main-start {
     font-size: 16px;
     font-weight: var(--font-bold);
     padding: 8px 16px;
+}
+.desktop-only{
+    display: none;
+}
+@media (min-width: 600px){
+    .mobile-only {
+        display: none !important;
+    }
+    .logo{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap:4px;
+
+        & > svg{
+            width: 38px;
+            height: 38px;
+        }
+        & > span{
+            font-weight: var(--font-black);
+            font-size: 32px;
+
+            background: var(--light-text-gradient);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    }
+    .main-icon{
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        margin:0;
+        gap: 20px;
+        padding: 10px;
+        & > div{
+            display: flex;
+            justify-content: center;
+            & > svg{
+                width: 32px;
+                height: 32px;
+                transition: color 200ms ease-out;
+                
+                &:hover{color: var(--light-accent)}
+            }
+        }    
+    }
+    .main-navigation{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        height: 60px;
+        margin: 0;
+        & > nav{
+            display: flex;
+            width: 800px;
+            align-items: center;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+    }
 }
