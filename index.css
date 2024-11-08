@@ -1,6 +1,7 @@
 /* test */
 :root {
     --light-foreground: #060e0f;
+    --light-startcolor: #EAF7FA;
     --light-background: #fcfdfd;
     --light-primary: #4aa6ba;
     --light-secondary: #9690d5;
@@ -137,10 +138,11 @@ main {
 }
 
 button.primary {
-    border: 0;
-    border-radius: 8px;
+    border-style: solid;
+    border-width: 0 4px 4px 0;
+    border-radius:32px;
     background-color: var(--light-primary);
-    color: var(--light-foreground);
+    color: var(--light-startcolor);
 
     display: flex;
     justify-content: center;
@@ -156,6 +158,6 @@ button.primary {
 button.main-start {
     width: 100%;
     font-size: 16px;
-    font-weight: var(--font-regular);
+    font-weight: var(--font-bold);
     padding: 8px 16px;
 }
