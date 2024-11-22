@@ -132,7 +132,8 @@
     <script src="/lib/linker.mjs" type="module"></script>
     <script type="module">
       import {Linker} from "./lib/linker.mjs";
-      const linker = new Linker();
+      // noinspection ES6ConvertVarToLetConst
+      var linker = new Linker();
       linker.overrideAnchor();
       linker.loadPage('/');
     </script>
