@@ -81,7 +81,9 @@ async function reviewSummary(reviewRatio, reviewCount) {
 
 export default class GamePage extends BasePage {
   constructor() {
-    super("game", "Game - Steambus")
+    super("game", "Game - Steambus", {
+      preventState: true
+    })
   }
 
   async mountContent() {

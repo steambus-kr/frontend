@@ -2,7 +2,9 @@ import BasePage from "../lib/base.mjs";
 
 export default class PageNotFoundPage extends BasePage {
   constructor() {
-    super("404", "Page Not Found - Steambus");
+    super("404", "Page Not Found - Steambus", {
+      preventState: true,
+    });
   }
 
   async mountContent() {
