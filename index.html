@@ -132,10 +132,16 @@
     <script src="/lib/linker.mjs" type="module"></script>
     <script type="module">
       import {Linker} from "./lib/linker.mjs";
+      import pageMap from "./lib/pageMap.mjs";
       // noinspection ES6ConvertVarToLetConst
       var linker = new Linker();
       linker.overrideAnchor();
-      linker.loadPage('/', null);
+      const path = window.location.pathname;
+      if (!Object.keys(pageMap).includes(path)) {
+        linker.loadPage('/404', null);
+      } else {
+        linker.loadPage(path, null);
+      }
     </script>
   </body>
 </html>
