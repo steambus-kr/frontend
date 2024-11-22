@@ -180,7 +180,7 @@ export default class GamePage extends BasePage {
       }));
     } catch (e) {
       console.error(e);
-      await UnexpectedErrorHandler();
+      await UnexpectedErrorHandler("클라이언트 오류");
     }
     return container;
   }
