@@ -1,0 +1,41 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+
+    & > .logo {
+        display: flex;
+        flex-direction: row;
+        gap: 6px;
+        align-items: center;
+
+        & > svg {
+            width: 38px;
+            height: 38px;
+        }
+
+        & > span {
+            font-weight: var(--font-black);
+            font-size: 32px;
+
+            background: var(--light-text-gradient);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    }
+
+    & > h1.header {
+        font-weight: var(--font-bold);
+        font-size: 32px;
+    }
+
+    & > button.main-start {
+        width: 100%;
+        font-size: 16px;
+        font-weight: var(--font-bold);
+        padding: 8px 16px;
+    }
+}

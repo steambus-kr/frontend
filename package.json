@@ -2,6 +2,7 @@
   "name": "steambus-frontend",
   "type": "module",
   "devDependencies": {
-    "prettier": "^3.3.3"
+    "prettier": "^3.3.3",
+    "serve": "^14.2.4"
   }
 }
