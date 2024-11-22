@@ -1,0 +1,16 @@
+.page {
+    & * {
+        width: 100%;
+        text-align: center;
+    }
+
+    & > h1 {
+        font-weight: var(--font-bold);
+        font-size: 32px;
+    }
+
+    & > p {
+        font-weight: var(--font-regular);
+        font-size: 16px;
+    }
+}
