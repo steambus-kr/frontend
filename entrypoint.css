@@ -25,15 +25,15 @@
     --very-positive: #0dff00;
     --overwhalmingly-positive: #00d624;
 
+    --overwhelmingly-positive-foreground: #006c12;
     --very-positive-foreground: #067e00;
-    --very-negative-foreground: #ffd6d6;
     --positive-foreground: #067900;
-    --overwhalmingly-positive-foreground: #006c12;
-    --overwhelmingly-negative-foreground: #ffe4e4;
-    --negative-foreground: #ffece2;
     --mostly-positive-foreground: #4e6d00;
-    --mostly-negative-foreground: #fff7e4;
     --mixed-foreground: #666600;
+    --mostly-negative-foreground: #fff7e4;
+    --negative-foreground: #ffece2;
+    --very-negative-foreground: #ffd6d6;
+    --overwhelmingly-negative-foreground: #ffe4e4;
 
     --font-thin: 100;
     --font-extralight: 200;
