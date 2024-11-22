@@ -115,7 +115,10 @@ export default class GamePage extends BasePage {
         body: JSON.stringify({
           exclude: [],
           filter: {},
-        })
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        }
       })
 
       if (!gameInfo.ok) {
