@@ -1,0 +1,31 @@
+# replace url on production
+http://localhost:3000 {
+	# replace root on production
+	root * /home/swpark/WebstormProjects/steambus-frontend
+
+	handle /api/* {
+		@handleOption method OPTIONS # for CORS, should be deleted on production
+		respond @handleOption "" 200 # for CORS, should be deleted on production
+		header Access-Control-Allow-Origin * # for CORS, should be deleted on production
+		header Access-Control-Allow-Headers content-type # for CORS, should be deleted on production
+		header Access-Control-Allow-Methods POST,OPTIONS # for CORS, should be deleted on production
+		reverse_proxy https://steambus.kr # for DEV, should be replaced with local backend
+	}
+
+	handle /pageScripts/* {
+	    file_server browse
+	}
+
+	handle /pageStyle/* {
+	    file_server browse
+	}
+
+	handle /lib/* {
+	    file_server browse
+	}
+
+	handle {
+	    try_files {path} /index.html
+		file_server
+	}
+}
