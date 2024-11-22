@@ -110,7 +110,7 @@ export default class GamePage extends BasePage {
     }
 
     try {
-      const gameInfo = await fetch("https://steambus.kr/api/game/recommend", {
+      const gameInfo = await fetch("/api/game/recommend", {
         method: "POST",
         body: JSON.stringify({
           exclude: [],
