@@ -11,12 +11,7 @@ export default class HistoryPage extends BasePage {
     });
     const content = document.createElement("div");
     content.classList.add("page");
-    content.innerHTML = `
-      <h1>History</h1>
-      <p>
-        This page is a placeholder for a future feature.
-      </p>
-    `;
+    content.innerHTML = await fetch('/pageScripts/history.html').then(r => r.text());
     return content;
   }
 
