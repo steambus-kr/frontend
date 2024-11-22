@@ -10,7 +10,6 @@ export default class HistoryPage extends BasePage {
       setTimeout(r, 10000);
     });
     const content = document.createElement("div");
-    content.classList.add("page");
     content.innerHTML = await fetch('/pageScripts/history.html').then(r => r.text());
     return content;
   }

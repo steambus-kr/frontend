@@ -7,7 +7,6 @@ export default class SettingsPage extends BasePage {
 
   async mountContent() {
     const content = document.createElement("div");
-    content.classList.add("page");
     content.innerHTML = await fetch('/pageScripts/settings.html').then(r => r.text());
     return content;
   }
