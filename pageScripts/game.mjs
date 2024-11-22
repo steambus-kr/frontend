@@ -106,7 +106,7 @@ export default class GamePage extends BasePage {
     }
 
     async function UnexpectedErrorHandler(code) {
-      await ErrorDescriptionHandler(`${code}`, "서버에서 알 수 없는 오류가 발생했습니다. 관리자에게 문의하거나 조금 뒤에 다시 시도해보세요.");
+      await ErrorDescriptionHandler(`${code}`, "알 수 없는 오류가 발생했습니다. 관리자에게 문의하거나 조금 뒤에 다시 시도해보세요.");
     }
 
     try {
