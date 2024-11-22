@@ -88,6 +88,7 @@ export default class GamePage extends BasePage {
     const container = document.createElement("div");
 
     async function ErrorDescriptionHandler(title, description) {
+      container.classList.add("error");
       const titleElm = document.createElement("h1");
       const descriptionElm = document.createElement("p");
       titleElm.innerText = title;
