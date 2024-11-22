@@ -189,6 +189,7 @@ button.primary,.button-primary {
     border-radius: 32px;
     background-color: var(--light-primary);
     color: var(--light-primary-foreground);
+    text-decoration: none;
 
     display: flex;
     justify-content: center;
