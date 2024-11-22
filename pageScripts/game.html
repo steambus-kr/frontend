@@ -1,27 +1,23 @@
 <header>
   <div class="thumbnail">
-    <img alt="thumbnail" src="https://cdn.gamemeca.com/data_center/232/274/20210714110354.jpg">
+    <img alt="thumbnail" src="{{thumbnail_src}}">
   </div>
   <div class="text">
-    <p class="genres">Action, Adventure, Massive Multiplayer, Free To Play</p>
-    <h1>PUBG: BATTLEGROUNDS</h1>
+    <p class="genres">{{genres}}</p>
+    <h1>{{title}}</h1>
     <div class="desc-link-container">
       <div class="ext-links">
-        <a data-outside="true">
+        <a data-outside="true" href="https://steamdb.info/app/{{app_id}}/charts/">
           <span>SteamDB</span>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M17.45 15.18L22 7.31V21H2V3h2v12.54L9.5 6L16 9.78l4.24-7.33l1.73 1l-5.23 9.05l-6.51-3.75L4.31 19h2.26l4.39-7.56z"/></svg>
         </a>
-        <a data-outside="true">
+        <a data-outside="true" href="https://store.steampowered.com/app/{{app_id}}/">
           <span>Steam Store</span>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 1 10 10a10 10 0 0 1-10 10c-4.6 0-8.45-3.08-9.64-7.27l3.83 1.58a2.84 2.84 0 0 0 2.78 2.27c1.56 0 2.83-1.27 2.83-2.83v-.13l3.4-2.43h.08c2.08 0 3.77-1.69 3.77-3.77s-1.69-3.77-3.77-3.77s-3.78 1.69-3.78 3.77v.05l-2.37 3.46l-.16-.01c-.59 0-1.14.18-1.59.49L2 11.2C2.43 6.05 6.73 2 12 2M8.28 17.17c.8.33 1.72-.04 2.05-.84s-.05-1.71-.83-2.04l-1.28-.53c.49-.18 1.04-.19 1.56.03c.53.21.94.62 1.15 1.15c.22.52.22 1.1 0 1.62c-.43 1.08-1.7 1.6-2.78 1.15c-.5-.21-.88-.59-1.09-1.04zm9.52-7.75c0 1.39-1.13 2.52-2.52 2.52a2.52 2.52 0 0 1-2.51-2.52a2.5 2.5 0 0 1 2.51-2.51a2.52 2.52 0 0 1 2.52 2.51m-4.4 0c0 1.04.84 1.89 1.89 1.89c1.04 0 1.88-.85 1.88-1.89s-.84-1.89-1.88-1.89c-1.05 0-1.89.85-1.89 1.89"/></svg>
         </a>
       </div>
       <p class="detail">
-        Play PUBG: BATTLEGROUNDS for free. Land on strategiclocations,
-        loot weapons and supplies, and survive to become the last team
-        standing across various, diverse Battlegrounds. Squad up and
-        join the Battlegroudns for the original
-        Battle Royale experience that only PUBG: BATTLEGROUDNS can offer.
+        {{description}}
       </p>
     </div>
   </div>
@@ -31,40 +27,40 @@
     <p class="subject">최고 동시 접속자 수</p>
     <div class="two-box">
       <div>
-        <p class="content">117,867</p>
+        <p class="content">{{current_player}}</p>
         <p class="description">현재</p>
       </div>
       <hr>
       <div>
-        <p class="content">691,716</p>
+        <p class="content">{{peak_player}}</p>
         <p class="description">24시간 내</p>
       </div>
     </div>
   </div>
   <div class="buy item col1">
     <p class="subject">게임 소유자</p>
-    <p class="content">3,296,647명</p>
+    <p class="content">최소 {{owner_min}}명</p>
   </div>
   <div class="d-day item col1">
     <p class="subject">출시일</p>
-    <p class="content">21 Dec, 2017</p>
+    <p class="content">{{release_date}}</p>
   </div>
-  <div class="review item col2">
+  <div class="review item col2 {{review_summary_code}}">
     <p class="subject">리뷰</p>
-    <p class="content">복합적</p>
+    <p class="content">{{review_summary_ko}}</p>
     <div class="two-box">
       <div>
-        <p class="subcontent">1,441,495</p>
+        <p class="subcontent">{{review_positive}}</p>
         <p class="description">추천</p>
       </div>
       <hr>
       <div>
-        <p class="subcontent">1,008,671</p>
+        <p class="subcontent">{{review_negative}}</p>
         <p class="description">비추천</p>
       </div>
     </div>
   </div>
 </div>
 <div class="button-container">
-  <button class="primary">시작하기</button>
+  <button class="primary">다시 뽑기</button>
 </div>
