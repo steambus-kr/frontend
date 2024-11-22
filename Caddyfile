@@ -12,20 +12,8 @@ http://localhost:3000 {
 		reverse_proxy https://steambus.kr # for DEV, should be replaced with local backend
 	}
 
-	handle /pageScripts/* {
-	    file_server browse
-	}
-
-	handle /pageStyle/* {
-	    file_server browse
-	}
-
-	handle /lib/* {
-	    file_server browse
-	}
-
 	handle {
 	    try_files {path} /index.html
-		file_server
+		file_server browse
 	}
 }
