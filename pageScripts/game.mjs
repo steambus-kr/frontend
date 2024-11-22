@@ -105,8 +105,8 @@ export default class GamePage extends BasePage {
       await ErrorDescriptionHandler("429", "짧은 시간에 너무 많은 요청이 시도되었습니다. 조금 뒤 다시 시도해주세요.");
     }
 
-    async function UnexpectedErrorHandler() {
-      await ErrorDescriptionHandler("500", "서버에서 알 수 없는 오류가 발생했습니다. 관리자에게 문의하거나 조금 뒤에 다시 시도해보세요.");
+    async function UnexpectedErrorHandler(code) {
+      await ErrorDescriptionHandler(`${code}`, "서버에서 알 수 없는 오류가 발생했습니다. 관리자에게 문의하거나 조금 뒤에 다시 시도해보세요.");
     }
 
     try {
@@ -127,7 +127,7 @@ export default class GamePage extends BasePage {
             await TooManyRequestHandler();
             break;
           default:
-            await UnexpectedErrorHandler();
+            await UnexpectedErrorHandler(gameInfo.status);
         }
 
         return container;
