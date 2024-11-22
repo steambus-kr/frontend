@@ -190,7 +190,7 @@ button.primary {
     justify-content: center;
     align-items: center;
 
-    transition: filter 50ms ease-out;
+    transition: filter 100ms ease-in-out;
 
     &:hover {
         filter: brightness(0.9);
