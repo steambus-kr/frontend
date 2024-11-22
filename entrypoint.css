@@ -117,6 +117,15 @@ body {
     }
 }
 
+#root .loading {
+    transition: opacity 50ms ease-out;
+    opacity: 1;
+
+    @starting-style {
+        opacity: 0;
+    }
+}
+
 nav.mobile-only {
     position: fixed;
     bottom: 0;
