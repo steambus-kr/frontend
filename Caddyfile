@@ -1,5 +1,5 @@
 # replace url on production
-http://localhost:3000 {
+http://localhost:8000 {
 	# replace root on production
 	root * /home/swpark/WebstormProjects/steambus-frontend
 
