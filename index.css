@@ -1,7 +1,10 @@
 /* v.1 */
 :root {
     --light-foreground: #060e0f;
+    --light-foreground-alt: #363e3f;
+    --light-border: #a6aeaf;
     --light-background: #fcfdfd;
+    --light-background-alt: #c6cecf;
     --light-primary: #4aa6ba;
     --light-secondary: #9690d5;
     --light-accent: #886bc7;

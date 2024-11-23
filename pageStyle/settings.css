@@ -1,0 +1,148 @@
+.page {
+    width: 100%;
+    height: 100%;
+    padding: 48px 0;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+
+    & > * {
+        width: 100%;
+    }
+
+    & > h1 {
+        text-align: center;
+        font-size: 32px;
+        font-weight: var(--font-bold);
+    }
+
+    & #setting {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+
+        & label {
+            &[for] {
+                font-size: 12px;
+                font-weight: var(--font-medium);
+            }
+            &.as-input {
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+                gap: 4px;
+                padding: 8px 12px;
+
+                font-size: 16px;
+
+                transition: border 200ms ease-out;
+                border: 1px solid var(--light-border);
+                border-radius: 8px;
+
+                &:focus-within {
+                    border-color: var(--light-secondary);
+                }
+
+                & * {
+                    flex-shrink: 0;
+                }
+
+                & input {
+                    border: none !important;
+                    outline: none !important;
+
+                    flex-grow: 1;
+
+                    &::-webkit-outer-spin-button,
+                    &::-webkit-inner-spin-button {
+                        -webkit-appearance: none;
+                    }
+                    &[type=number] {
+                        -moz-appearance: textfield;
+                    }
+                }
+            }
+        }
+
+        & fieldset {
+            border: 1px solid var(--light-border);
+            border-radius: 8px;
+            padding: 16px;
+
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+
+            width: 100%;
+
+            & > legend {
+                font-size: 12px;
+                padding: 0 8px;
+                font-weight: var(--font-bold);
+            }
+        }
+
+        & .tab-content {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        & .field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            overflow: hidden;
+
+            &.folded {
+                height: 0;
+            }
+        }
+
+        & .select-tab {
+            display: flex;
+            flex-direction: row;
+            gap: 2px;
+            padding: 4px;
+            border-radius: 8px;
+            background-color: var(--light-background-alt);
+            & > button {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                gap: 4px;
+                width: 100%;
+                background-color: var(--light-background-alt);
+                color: var(--light-foreground-alt);
+                padding: 4px;
+                font-weight: var(--font-semibold);
+                &.selected {
+                    background-color: var(--light-secondary);
+                    color: var(--light-secondary-foreground);
+                }
+            }
+        }
+    }
+
+    & .control-container {
+        width: 100%;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 4px;
+
+        & > button {
+            font-size: 14px;
+            font-weight: var(--font-medium);
+            padding: 8px 12px;
+        }
+    }
+}
