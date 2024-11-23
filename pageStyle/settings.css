@@ -87,12 +87,6 @@
             }
         }
 
-        & .tab-content {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
         & .field {
             display: flex;
             flex-direction: column;
@@ -126,6 +120,16 @@
                     background-color: var(--light-secondary);
                     color: var(--light-secondary-foreground);
                 }
+            }
+        }
+
+        & .select-tab ~ .tab-content {
+            display: none; /* flex */
+            flex-direction: column;
+            gap: 16px;
+
+            &.selected {
+                display: flex;
             }
         }
     }
