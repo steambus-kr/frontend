@@ -38,6 +38,22 @@
     --very-negative-foreground: #ffd6d6;
     --overwhelmingly-negative-foreground: #ffe4e4;
 
+    --font-family:
+            "Pretendard Variable",
+            Pretendard,
+            -apple-system,
+            BlinkMacSystemFont,
+            system-ui,
+            Roboto,
+            "Helvetica Neue",
+            "Segoe UI",
+            "Apple SD Gothic Neo",
+            "Noto Sans KR",
+            "Malgun Gothic",
+            "Apple Color Emoji",
+            "Segoe UI Emoji",
+            "Segoe UI Symbol";
+
     --font-thin: 100;
     --font-extralight: 200;
     --font-light: 300;
@@ -52,26 +68,17 @@
 body {
     background-color: var(--light-background);
     color: var(--light-foreground);
-    font-family:
-        "Pretendard Variable",
-        Pretendard,
-        -apple-system,
-        BlinkMacSystemFont,
-        system-ui,
-        Roboto,
-        "Helvetica Neue",
-        "Segoe UI",
-        "Apple SD Gothic Neo",
-        "Noto Sans KR",
-        "Malgun Gothic",
-        "Apple Color Emoji",
-        "Segoe UI Emoji",
-        "Segoe UI Symbol",
-        sans-serif;
+    font-family: var(--font-family) sans-serif;
+
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     padding-bottom: 60px;
+}
+
+input,select,textarea {
+    width: 100%;
+    font-family: inherit;
 }
 
 #root {
