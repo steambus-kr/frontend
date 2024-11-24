@@ -199,13 +199,8 @@ button,.button {
     display: flex;
     justify-content: center;
     align-items: center;
-}
 
-button.primary,.button.primary {
-    background-color: var(--light-primary);
-    color: var(--light-primary-foreground);
-
-    transition: filter 100ms ease-in-out;
+    transition: filter 200ms ease-in-out;
 
     &:hover {
         filter: brightness(0.9);
@@ -219,6 +214,11 @@ button.primary,.button.primary {
         filter: opacity(0.5);
         cursor: not-allowed;
     }
+}
+
+button.primary,.button.primary {
+    background-color: var(--light-primary);
+    color: var(--light-primary-foreground);
 }
 
 nav.desktop-only {
