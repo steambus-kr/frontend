@@ -18,7 +18,7 @@ export default class SettingsPage extends BasePage {
         const tabId = tab.dataset.tabId;
         tabs[tabId] = [
           tab,
-          tabSelect.parentElement.querySelector(`.select-tab ~ .tab-content[data-tab-id="${tabId}"]`)
+          tabSelect.parentElement.querySelector(`.select-tab ~ .tab-content > div[data-tab-id="${tabId}"]`)
         ]
       }
       new Tab(tabs);

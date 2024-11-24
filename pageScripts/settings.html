@@ -31,53 +31,55 @@
       <button data-tab-id="advanced" type="button">고급 설정</button>
       <input type="hidden" name="review_tab" value="simple">
     </div>
-    <div class="tab-content selected" data-tab-id="simple">
-      <div class="field">
-        <label for="review_selection_min">리뷰 기준</label>
-        <label class="as-input">
-          <span>최소</span>
-          <select id="review_selection_min" name="review_selection_min"></select>
-        </label>
-        <label class="as-input">
-          <span>최대</span>
-          <select id="review_selection_max" name="review_selection_max"></select>
-        </label>
+    <div class="tab-content">
+      <div class="selected" data-tab-id="simple">
+        <div class="field">
+          <label for="review_selection_min">리뷰 기준</label>
+          <label class="as-input">
+            <span>최소</span>
+            <select id="review_selection_min" name="review_selection_min"></select>
+          </label>
+          <label class="as-input">
+            <span>최대</span>
+            <select id="review_selection_max" name="review_selection_max"></select>
+          </label>
+        </div>
       </div>
-    </div>
-    <div class="tab-content" data-tab-id="advanced">
-      <div class="field">
-        <label for="positive_min">긍정적 리뷰 개수</label>
-        <label class="as-input">
-          <span>최소</span>
-          <input id="positive_min" name="positive_min" type="number" step="10">
-          <span>개</span>
-        </label>
-        <label class="as-input">
-          <span>최대</span>
-          <input id="positive_max" name="positive_max" type="number" step="10">
-          <span>개</span>
-        </label>
-      </div>
-      <div class="folded field">
-        <label for="negative_min">부정적 리뷰 개수</label>
-        <label class="as-input">
-          <span>최소</span>
-          <input id="negative_min" name="negative_min" type="number" step="10">
-          <span>개</span>
-        </label>
-        <label class="as-input">
-          <span>최대</span>
-          <input id="negative_max" name="negative_max" type="number" step="10">
-          <span>개</span>
-        </label>
-      </div>
-      <div class="field" id="review_ratio">
-        <ul>
-          <li>최소 긍정적 리뷰 비율: <span>-</span></li>
-          <li>최대 긍정적 리뷰 비율: <span>-</span></li>
-        </ul>
-        <input type="hidden" name="review_ratio_min" disabled>
-        <input type="hidden" name="review_ratio_max" disabled>
+      <div class="" data-tab-id="advanced">
+        <div class="field">
+          <label for="positive_min">긍정적 리뷰 개수</label>
+          <label class="as-input">
+            <span>최소</span>
+            <input id="positive_min" name="positive_min" type="number" step="10">
+            <span>개</span>
+          </label>
+          <label class="as-input">
+            <span>최대</span>
+            <input id="positive_max" name="positive_max" type="number" step="10">
+            <span>개</span>
+          </label>
+        </div>
+        <div class="folded field">
+          <label for="negative_min">부정적 리뷰 개수</label>
+          <label class="as-input">
+            <span>최소</span>
+            <input id="negative_min" name="negative_min" type="number" step="10">
+            <span>개</span>
+          </label>
+          <label class="as-input">
+            <span>최대</span>
+            <input id="negative_max" name="negative_max" type="number" step="10">
+            <span>개</span>
+          </label>
+        </div>
+        <div class="field" id="review_ratio">
+          <ul>
+            <li>최소 긍정적 리뷰 비율: <span>-</span></li>
+            <li>최대 긍정적 리뷰 비율: <span>-</span></li>
+          </ul>
+          <input type="hidden" name="review_ratio_min" disabled>
+          <input type="hidden" name="review_ratio_max" disabled>
+        </div>
       </div>
     </div>
   </fieldset>
