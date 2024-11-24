@@ -78,7 +78,7 @@ body {
 
 input,select,textarea {
     width: 100%;
-    font-family: inherit;
+    font-family: var(--font-family) sans-serif;
 }
 
 #root {
