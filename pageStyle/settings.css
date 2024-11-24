@@ -55,11 +55,16 @@
                     flex-shrink: 0;
                 }
 
-                & input {
+                input,select {
+                    background-color: transparent;
                     border: none !important;
                     outline: none !important;
 
                     flex-grow: 1;
+                    width: 100%;
+                    flex-shrink: 1;
+
+                    font-size: 16px;
 
                     &::-webkit-outer-spin-button,
                     &::-webkit-inner-spin-button {

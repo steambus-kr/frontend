@@ -1,5 +1,18 @@
 import BasePage from "../lib/base.mjs";
 
+const reviewSelections = [
+  "-",
+  '"압도적으로 긍정적"',
+  '"매우 긍정적"',
+  '"긍정적"',
+  '"대체로 긍정적"',
+  '"복합적"',
+  '"대체로 부정적"',
+  '"부정적"',
+  '"매우 부정적"',
+  '"압도적으로 부정적"'
+]
+
 export default class SettingsPage extends BasePage {
   constructor() {
     super("settings", "Settings - Steambus");
@@ -22,6 +35,22 @@ export default class SettingsPage extends BasePage {
         ]
       }
       new Tab(tabs);
+    }
+
+    /* 리뷰 기준 옵션 삽입 */
+    const reviewElements = [];
+    for (const [idx, reviewSummary] of Object.entries(reviewSelections)) {
+      const c = document.createElement("option");
+      c.innerText = reviewSummary;
+      c.value = idx;
+      reviewElements.push(c);
+    }
+
+    const reviewSelectors = content.querySelectorAll(".review-selector")
+    for (const review of reviewSelectors) {
+      for (const element of reviewElements) {
+        review.appendChild(element.cloneNode(true))
+      }
     }
 
     return content;
