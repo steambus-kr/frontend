@@ -51,6 +51,10 @@
                     border-color: var(--light-secondary);
                 }
 
+                &:has(input:user-invalid) {
+                    border-color: red;
+                }
+
                 & * {
                     flex-shrink: 0;
                 }
