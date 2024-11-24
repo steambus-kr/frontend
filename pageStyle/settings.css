@@ -52,7 +52,7 @@
                 }
 
                 &:has(input:user-invalid) {
-                    border-color: red;
+                    border-color: var(--light-error-foreground);
                 }
 
                 & * {
@@ -102,11 +102,21 @@
         & .field {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 4px;
             overflow: hidden;
 
             &.folded {
                 height: 0;
+            }
+
+            & p.error-msg {
+                font-size: 12px;
+                font-weight: var(--font-medium);
+                color: var(--light-error-foreground);
+
+                &.no-error {
+                    display: none;
+                }
             }
         }
 

@@ -4,19 +4,22 @@
     <legend>플레이어 관련 설정</legend>
     <div class="field">
       <label for="owner_min">게임을 소유한 유저 수</label>
+      <p class="error-msg no-error" data-for="owner_min"></p>
       <label class="as-input">
         <span>최소</span>
-        <input id="owner_min" name="owner_min" type="number">
+        <input id="owner_min" name="owner_min" type="number" step="100">
         <span>명</span>
       </label>
     </div>
     <div class="field">
       <label for="player_min">24시간 내 동시 접속자</label>
+      <p class="error-msg no-error" data-for="player_min"></p>
       <label class="as-input">
         <span>최소</span>
         <input id="player_min" name="player_min" type="number">
         <span>명</span>
       </label>
+      <p class="error-msg no-error" data-for="player_max"></p>
       <label class="as-input">
         <span>최대</span>
         <input id="player_max" name="player_max" type="number">
@@ -35,10 +38,12 @@
       <div class="selected" data-tab-id="simple">
         <div class="field">
           <label for="review_selection_min">리뷰 기준</label>
+          <p class="error-msg no-error" data-for="review_selection_min"></p>
           <label class="as-input">
             <span>최소</span>
             <select id="review_selection_min" name="review_selection_min" class="review-selector"></select>
           </label>
+          <p class="error-msg no-error" data-for="review_selection_max"></p>
           <label class="as-input">
             <span>최대</span>
             <select id="review_selection_max" name="review_selection_max" class="review-selector"></select>
@@ -48,11 +53,13 @@
       <div class="" data-tab-id="advanced">
         <div class="field">
           <label for="positive_min">긍정적 리뷰 개수</label>
+          <p class="error-msg no-error" data-for="positive_min"></p>
           <label class="as-input">
             <span>최소</span>
             <input id="positive_min" name="positive_min" type="number">
             <span>개</span>
           </label>
+          <p class="error-msg no-error" data-for="positive_max"></p>
           <label class="as-input">
             <span>최대</span>
             <input id="positive_max" name="positive_max" type="number">
@@ -61,11 +68,13 @@
         </div>
         <div class="field">
           <label for="negative_min">부정적 리뷰 개수</label>
+          <p class="error-msg no-error" data-for="negative_min"></p>
           <label class="as-input">
             <span>최소</span>
             <input id="negative_min" name="negative_min" type="number">
             <span>개</span>
           </label>
+          <p class="error-msg no-error" data-for="negative_max"></p>
           <label class="as-input">
             <span>최대</span>
             <input id="negative_max" name="negative_max" type="number">

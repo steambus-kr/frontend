@@ -13,6 +13,7 @@
         var(--light-primary) 0%,
         var(--light-accent) 100%
     );
+    --light-error-foreground: #f60000;
 
     --light-primary-foreground: #eaf7fa;
     --light-secondary-foreground: #f6f5ff;

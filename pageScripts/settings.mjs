@@ -100,6 +100,32 @@ export default class SettingsPage extends BasePage {
       })
     })();
 
+    /* 모든 필드 validation시 오류 메시지 */
+    (() => {
+      const inputs = content.querySelectorAll("input,select")
+      inputs.forEach((element) => {
+        const errorMsg = content.querySelector(`p[data-for="${element.id}"]`);
+        element.addEventListener("invalid", (e) => {
+          e.preventDefault();
+          errorMsg.innerText = e.target.validationMessage;
+          errorMsg.classList.remove("no-error")
+        })
+        element.addEventListener("blur", (e) => {
+          if (e.target.validity.valid) return;
+          errorMsg.innerText = e.target.validationMessage;
+          errorMsg.classList.remove("no-error")
+        })
+        element.addEventListener("change", () => {
+          errorMsg.innerText = "";
+          errorMsg.classList.add("no-error")
+        })
+        element.addEventListener("focus", () => {
+          errorMsg.innerText = "";
+          errorMsg.classList.add("no-error")
+        })
+      })
+    })();
+
     return content;
   }
 
