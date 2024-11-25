@@ -98,13 +98,14 @@ export default class HistoryPage extends BasePage {
     );
     const historyContainer = content.querySelector(".game-container");
 
-    for (const historyItem of historyItems) {
+    for (const [idx, historyItem] of Object.entries(historyItems)) {
       const reviewInfo = await reviewSummary(
         historyItem.review.ratio,
         historyItem.review.positive + historyItem.review.negative,
       );
       const historyItemElement = document.createElement("article");
       historyItemElement.classList.add("history-item");
+      historyItemElement.style.setProperty("--index", idx);
       historyItemElement.innerHTML = await templateHandler(historyItemHTML, {
         title: historyItem.title,
         app_id: historyItem.app_id,

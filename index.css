@@ -176,6 +176,10 @@ nav.mobile-only {
                 color: var(--light-accent);
             }
 
+            &:active {
+                color: var(--light-accent);
+            }
+
             & > svg {
                 width: 24px;
                 height: 24px;
