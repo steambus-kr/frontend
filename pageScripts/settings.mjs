@@ -1,5 +1,5 @@
 import BasePage from "../lib/base.mjs";
-import validator, { optional, uint } from "../lib/validator.mjs";
+import validator, {optional, uint} from "../lib/validator.mjs";
 
 const reviewSelections = [
   "-",
@@ -70,61 +70,72 @@ export default class SettingsPage extends BasePage {
   }
 
   async validate(formDataObj) {
-    const errorResponse = {
-      ok: false,
+    const response = {
+      ok: true,
       errors: {},
     };
 
     function writeError(key, errorMsg) {
-      if (key in errorResponse.errors) {
+      response.ok = false;
+      if (key in response.errors) {
         // 덮어쓰기 금지, 첫 에러만 표시
         return;
       }
-      errorResponse.errors[key] = errorMsg;
+      response.errors[key] = errorMsg;
     }
 
     const t = validator(writeError);
-    const e = validator(() => {});
 
     t("owner_min", formDataObj.owner_min).t(optional).t(uint);
-    t("player_min", formDataObj.player_min)
+    const player_min_v = t("player_min", formDataObj.player_min)
       .t(optional)
       .t(uint)
-      .t((player_min) => {
-        e("player_max", formDataObj.player_max)
-          .t(optional)
-          .t(uint)
-          .t((player_max) => {
-            if (player_min > player_max)
-              return {
-                ok: false,
-                message: "최소값은 최대값보다 작아야 합니다.",
-              };
-          });
-        return {
-          ok: true,
-        };
-      });
-    t("player_max", formDataObj.player_max)
+    const player_max_v = t("player_max", formDataObj.player_max)
       .t(optional)
       .t(uint)
-      .t((player_max) => {
-        e("player_min", formDataObj.player_min)
-          .t(optional)
-          .t(uint)
-          .t((player_min) => {
-            if (player_max < player_min)
-              return {
-                ok: false,
-                message: "최대값은 최소값보다 커야 합니다.",
-              };
-          });
-      });
+    if (player_min_v.ok && !player_min_v.break && player_max_v.ok && !player_max_v.break && parseInt(formDataObj.player_min) > parseInt(formDataObj.player_max)) {
+      writeError("player_min", "최소값은 최대값보다 작아야 합니다.");
+    }
+    const positive_min_v = t("positive_min", formDataObj.positive_min)
+      .t(optional)
+      .t(uint)
+    const positive_max_v = t("positive_max", formDataObj.positive_max)
+      .t(optional)
+      .t(uint)
+    if (positive_min_v.ok && !positive_min_v.break && positive_max_v.ok && !positive_max_v.break && parseInt(formDataObj.positive_min) > parseInt(formDataObj.positive_max)) {
+      writeError("positive_min", "최소값은 최대값보다 작아야 합니다.");
+    }
+    const negative_min_v = t("negative_min", formDataObj.negative_min)
+      .t(optional)
+      .t(uint)
+    const negative_max_v = t("negative_max", formDataObj.negative_max)
+      .t(optional)
+      .t(uint)
+    if (negative_min_v.ok && !negative_min_v.break && negative_max_v.ok && !negative_max_v.break && parseInt(formDataObj.negative_min) > parseInt(formDataObj.negative_max)) {
+      writeError("negative_min", "최소값은 최대값보다 작아야 합니다.");
+    }
 
-    // min/max relative check
-    // tab validity check
-    // selection validity check
-    // positive/negative ratio check
+    return response;
+  }
+
+  async transform(formDataObj) {
+    function nullOrNumber(value) {
+      if (value === "") return null;
+      return parseInt(value)
+    }
+
+    return {
+      owner_min: nullOrNumber(formDataObj.owner_min),
+      player_min: nullOrNumber(formDataObj.player_min),
+      player_max: nullOrNumber(formDataObj.player_max),
+      review_tab: formDataObj.review_tab,
+      review_selection_min: parseInt(formDataObj.review_selection_min),
+      review_selection_max: parseInt(formDataObj.review_selection_max),
+      positive_min: nullOrNumber(formDataObj.positive_min),
+      positive_max: nullOrNumber(formDataObj.positive_max),
+      negative_min: nullOrNumber(formDataObj.negative_min),
+      negative_max: nullOrNumber(formDataObj.negative_max),
+    }
   }
 
   async mountContent() {
@@ -232,10 +243,12 @@ export default class SettingsPage extends BasePage {
         element.addEventListener("change", () => {
           errorMsg.innerText = "";
           errorMsg.classList.add("no-error");
+          element.setCustomValidity("");
         });
         element.addEventListener("focus", () => {
           errorMsg.innerText = "";
           errorMsg.classList.add("no-error");
+          element.setCustomValidity("");
         });
       });
     })();
@@ -245,9 +258,8 @@ export default class SettingsPage extends BasePage {
       const form = content.querySelector("form");
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
-        const validationResult = await this.validate(
-          Object.fromEntries(new FormData(form)),
-        );
+        const formDataObj = Object.fromEntries(new FormData(form));
+        const validationResult = await this.validate(formDataObj);
         if (!validationResult.ok) {
           for (const [key, errorMsg] of Object.entries(
             validationResult.errors,
@@ -257,7 +269,8 @@ export default class SettingsPage extends BasePage {
           form.reportValidity();
           return;
         }
-        // transform -> save
+        this.settings = await this.transform(formDataObj);
+        await this.saveConfig();
       });
     })();
 
