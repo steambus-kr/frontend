@@ -1,0 +1,32 @@
+<div class="thumbnail">
+  <img src="{{thumbnail_src}}" alt="thumbnail">
+</div>
+<div class="data">
+  <header>
+    <p class="genres">{{genres}}</p>
+    <h2 class="title">{{title}}</h2>
+    <div class="ext-links">
+      <a data-outside="true" href="https://steamdb.info/app/{{app_id}}/charts/">
+        <span>SteamDB</span>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M17.45 15.18L22 7.31V21H2V3h2v12.54L9.5 6L16 9.78l4.24-7.33l1.73 1l-5.23 9.05l-6.51-3.75L4.31 19h2.26l4.39-7.56z"/></svg>
+      </a>
+      <a data-outside="true" href="https://store.steampowered.com/app/{{app_id}}/">
+        <span>Steam Store</span>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 1 10 10a10 10 0 0 1-10 10c-4.6 0-8.45-3.08-9.64-7.27l3.83 1.58a2.84 2.84 0 0 0 2.78 2.27c1.56 0 2.83-1.27 2.83-2.83v-.13l3.4-2.43h.08c2.08 0 3.77-1.69 3.77-3.77s-1.69-3.77-3.77-3.77s-3.78 1.69-3.78 3.77v.05l-2.37 3.46l-.16-.01c-.59 0-1.14.18-1.59.49L2 11.2C2.43 6.05 6.73 2 12 2M8.28 17.17c.8.33 1.72-.04 2.05-.84s-.05-1.71-.83-2.04l-1.28-.53c.49-.18 1.04-.19 1.56.03c.53.21.94.62 1.15 1.15c.22.52.22 1.1 0 1.62c-.43 1.08-1.7 1.6-2.78 1.15c-.5-.21-.88-.59-1.09-1.04zm9.52-7.75c0 1.39-1.13 2.52-2.52 2.52a2.52 2.52 0 0 1-2.51-2.52a2.5 2.5 0 0 1 2.51-2.51a2.52 2.52 0 0 1 2.52 2.51m-4.4 0c0 1.04.84 1.89 1.89 1.89c1.04 0 1.88-.85 1.88-1.89s-.84-1.89-1.88-1.89c-1.05 0-1.89.85-1.89 1.89"/></svg>
+      </a>
+    </div>
+  </header>
+  <div class="foot">
+    <div class="metadata">
+      <span>전체 리뷰 {{review_total}}개</span>
+      <span>긍정적 리뷰 {{review_percentage}} ({{review_summary}})</span>
+      <span>{{history_datetime}}에 기록됨</span>
+    </div>
+    <div class="control">
+      <button class="delete">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12z"/></svg>
+        <span>기록 삭제</span>
+      </button>
+    </div>
+  </div>
+</div>
