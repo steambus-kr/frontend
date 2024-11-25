@@ -295,6 +295,10 @@
                 background-color: var(--overwhelmingly-negative);
                 color: var(--overwhelmingly-negative-foreground);
             }
+            &.none {
+                background-color: var(--light-background-alt);
+                color: var(--light-foreground-alt);
+            }
         }
     }
 }
