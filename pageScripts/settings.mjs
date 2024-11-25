@@ -1,4 +1,5 @@
 import BasePage from "../lib/base.mjs";
+import validator, { optional, uint } from "../lib/validator.mjs";
 
 const reviewSelections = [
   "-",
@@ -10,8 +11,8 @@ const reviewSelections = [
   '"대체로 부정적"',
   '"부정적"',
   '"매우 부정적"',
-  '"압도적으로 부정적"'
-]
+  '"압도적으로 부정적"',
+];
 
 const initialState = {
   owner_min: null,
@@ -24,10 +25,10 @@ const initialState = {
   positive_max: null,
   negative_min: null,
   negative_max: null,
-}
+};
 
 export default class SettingsPage extends BasePage {
-  static SETTINGS_KEY = "settings"
+  static SETTINGS_KEY = "settings";
 
   inputs = [];
   settings = {
@@ -41,7 +42,7 @@ export default class SettingsPage extends BasePage {
     positive_max: null,
     negative_min: null,
     negative_max: null,
-  }
+  };
 
   constructor() {
     super("settings", "Settings - Steambus");
@@ -57,7 +58,10 @@ export default class SettingsPage extends BasePage {
   }
 
   async saveConfig() {
-    localStorage.setItem(SettingsPage.SETTINGS_KEY, JSON.stringify(this.settings));
+    localStorage.setItem(
+      SettingsPage.SETTINGS_KEY,
+      JSON.stringify(this.settings),
+    );
   }
 
   async setFormError(key, errorMsg) {
@@ -68,40 +72,20 @@ export default class SettingsPage extends BasePage {
   async validate(formDataObj) {
     const errorResponse = {
       ok: false,
-      errors: {}
-    }
+      errors: {},
+    };
 
     function writeError(key, errorMsg) {
-      if (key in errorResponse.errors) { // 덮어쓰기 금지, 첫 에러만 표시
+      if (key in errorResponse.errors) {
+        // 덮어쓰기 금지, 첫 에러만 표시
         return;
       }
       errorResponse.errors[key] = errorMsg;
     }
 
-    function UInt(key, value) {
-      if (isNaN(value)) {
-        writeError(key, "정수만 입력할 수 있습니다.")
-      } else if (value < 0) {
-        writeError(key, "값이 0보다 커야 합니다.")
-      }
-    }
+    const t = validator(writeError);
 
-    const UIntKeys = [
-      "owner_min",
-      "player_min",
-      "player_max",
-      "positive_min",
-      "positive_max",
-      "negative_min",
-      "negative_max",
-    ]
-
-    for (const key of UIntKeys) {
-      const value = formDataObj[key];
-      if (value !== "") {
-        UInt(key, parseInt(value));
-      }
-    }
+    t("owner_min", formDataObj.owner_min).t(optional).t(uint);
 
     // min/max relative check
     // tab validity check
@@ -112,7 +96,9 @@ export default class SettingsPage extends BasePage {
   async mountContent() {
     /* HTML 로드 */
     const content = document.createElement("div");
-    content.innerHTML = await fetch('/pageScripts/settings.html').then(r => r.text());
+    content.innerHTML = await fetch("/pageScripts/settings.html").then((r) =>
+      r.text(),
+    );
 
     this.inputs = Array.from(content.querySelectorAll("input,select,textarea"));
     await this.loadConfig();
@@ -123,13 +109,15 @@ export default class SettingsPage extends BasePage {
     (() => {
       const tabSelects = content.querySelectorAll(".select-tab");
       for (const tabSelect of tabSelects) {
-        const tabs = {}
+        const tabs = {};
         for (const tab of tabSelect.querySelectorAll("button")) {
           const tabId = tab.dataset.tabId;
           tabs[tabId] = [
             tab,
-            tabSelect.parentElement.querySelector(`.select-tab ~ .tab-content > div[data-tab-id="${tabId}"]`)
-          ]
+            tabSelect.parentElement.querySelector(
+              `.select-tab ~ .tab-content > div[data-tab-id="${tabId}"]`,
+            ),
+          ];
         }
         new Tab(tabs);
       }
@@ -145,18 +133,18 @@ export default class SettingsPage extends BasePage {
         reviewElements.push(c);
       }
 
-      const reviewSelectors = content.querySelectorAll(".review-selector")
+      const reviewSelectors = content.querySelectorAll(".review-selector");
       for (const review of reviewSelectors) {
         for (const element of reviewElements) {
-          review.appendChild(element.cloneNode(true))
+          review.appendChild(element.cloneNode(true));
         }
       }
     })();
 
     /* 최대/최소 옵션 변경 */
     (() => {
-      const reviewMin = content.querySelector('select#review_selection_min');
-      const reviewMax = content.querySelector('select#review_selection_max');
+      const reviewMin = content.querySelector("select#review_selection_min");
+      const reviewMax = content.querySelector("select#review_selection_max");
 
       const reviewMinOptions = reviewMin.querySelectorAll("option");
       const reviewMaxOptions = reviewMax.querySelectorAll("option");
@@ -165,59 +153,57 @@ export default class SettingsPage extends BasePage {
         const value = parseInt(e.currentTarget.value);
         const shouldDisabledRange = [value + 1, reviewSelections.length - 1];
 
-        reviewMaxOptions.forEach(
-          (option) =>
-            value === 0
-              ? option.disabled = false
-              : option.value !== "0" &&
+        reviewMaxOptions.forEach((option) =>
+          value === 0
+            ? (option.disabled = false)
+            : option.value !== "0" &&
                 option.value >= shouldDisabledRange[0] &&
                 option.value <= shouldDisabledRange[1]
-                  ? option.disabled = true
-                  : option.disabled = false
+              ? (option.disabled = true)
+              : (option.disabled = false),
         );
-      })
+      });
 
       reviewMax.addEventListener("change", (e) => {
         const value = parseInt(e.currentTarget.value);
         const shouldDisabledRange = [0, value - 1];
 
-        reviewMinOptions.forEach(
-          (option) =>
-            value === 0
-              ? option.disabled = false
-              : option.value !== "0" &&
+        reviewMinOptions.forEach((option) =>
+          value === 0
+            ? (option.disabled = false)
+            : option.value !== "0" &&
                 option.value >= shouldDisabledRange[0] &&
                 option.value <= shouldDisabledRange[1]
-                  ? option.disabled = true
-                  : option.disabled = false
+              ? (option.disabled = true)
+              : (option.disabled = false),
         );
-      })
+      });
     })();
 
     /* 모든 필드 validation시 오류 메시지 */
     (() => {
-      const inputs = content.querySelectorAll("input,select")
+      const inputs = content.querySelectorAll("input,select");
       inputs.forEach((element) => {
         const errorMsg = content.querySelector(`p[data-for="${element.id}"]`);
         element.addEventListener("invalid", (e) => {
           e.preventDefault();
           errorMsg.innerText = e.target.validationMessage;
-          errorMsg.classList.remove("no-error")
-        })
+          errorMsg.classList.remove("no-error");
+        });
         element.addEventListener("blur", (e) => {
           if (e.target.validity.valid) return;
           errorMsg.innerText = e.target.validationMessage;
-          errorMsg.classList.remove("no-error")
-        })
+          errorMsg.classList.remove("no-error");
+        });
         element.addEventListener("change", () => {
           errorMsg.innerText = "";
-          errorMsg.classList.add("no-error")
-        })
+          errorMsg.classList.add("no-error");
+        });
         element.addEventListener("focus", () => {
           errorMsg.innerText = "";
-          errorMsg.classList.add("no-error")
-        })
-      })
+          errorMsg.classList.add("no-error");
+        });
+      });
     })();
 
     /* SubmitEvent 핸들링 */
@@ -225,16 +211,20 @@ export default class SettingsPage extends BasePage {
       const form = content.querySelector("form");
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
-        const validationResult = await this.validate(Object.fromEntries(new FormData(form)));
+        const validationResult = await this.validate(
+          Object.fromEntries(new FormData(form)),
+        );
         if (!validationResult.ok) {
-          for (const [key, errorMsg] of Object.entries(validationResult.errors)) {
+          for (const [key, errorMsg] of Object.entries(
+            validationResult.errors,
+          )) {
             await this.setFormError(key, errorMsg);
           }
           form.reportValidity();
           return;
         }
         // transform -> save
-      })
+      });
     })();
 
     return content;
@@ -252,21 +242,23 @@ class Tab {
 
   constructor(tabs) {
     this.tabs = tabs;
-    this.applyEvents()
+    this.applyEvents();
   }
 
   applyEvents() {
     const onTabSelectBtnClick = (tabId) => (e) => {
       e.currentTarget.classList.add("selected");
       this.tabs[tabId][1].classList.add("selected");
-      for (const tabElementExceptThis of Object.entries(this.tabs).filter(([_tabId]) => _tabId !== tabId).map(([_, l]) => l)) {
+      for (const tabElementExceptThis of Object.entries(this.tabs)
+        .filter(([_tabId]) => _tabId !== tabId)
+        .map(([_, l]) => l)) {
         tabElementExceptThis[0].classList.remove("selected");
         tabElementExceptThis[1].classList.remove("selected");
       }
-    }
+    };
 
     for (const [tabId, tabElement] of Object.entries(this.tabs)) {
-      tabElement[0].addEventListener('click', onTabSelectBtnClick(tabId))
+      tabElement[0].addEventListener("click", onTabSelectBtnClick(tabId));
     }
   }
 }
