@@ -272,7 +272,10 @@ export default class GamePage extends BasePage {
        * }
        */
       const gameInfoJson = await gameInfo.json();
-      await this.pushHistory(gameInfoJson);
+      await this.pushHistory({
+        ...gameInfoJson,
+        datetime: new Date().getTime(),
+      });
       const reviewInfo = await reviewSummary(
         gameInfoJson.review.ratio,
         gameInfoJson.review.positive + gameInfoJson.review.negative,
