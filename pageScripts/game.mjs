@@ -86,6 +86,84 @@ export default class GamePage extends BasePage {
     })
   }
 
+  async filterBuilder(obj) {
+    const filter = {};
+    if (obj.owner_min) filter.owner_min = obj.owner_min;
+    if (obj.player_min) filter.player_min = obj.player_min;
+    if (obj.player_max) filter.player_max = obj.player_max;
+    if (obj.review_tab === "simple") {
+      switch (obj.review_selection_min) {
+        case 1:
+          filter.positive_review_min = 475;
+          filter.review_ratio_min = 0.95;
+          break;
+        case 2:
+          filter.positive_review_min = 40;
+          filter.review_ratio_min = 0.8;
+          break;
+        case 3:
+          filter.positive_review_min = 8;
+          filter.review_ratio_min = 0.8;
+          break;
+        case 4:
+          filter.positive_review_min = 7;
+          filter.review_ratio_min = 0.7;
+          break;
+        case 5:
+          filter.positive_review_min = 4;
+          filter.review_ratio_min = 0.4;
+          break;
+        case 6:
+          filter.positive_review_min = 2;
+          filter.review_ratio_min = 0.2;
+          break;
+        case 7:
+          filter.positive_review_max = 9;
+          filter.review_ratio_min = 0.0;
+          break;
+        case 8:
+          filter.positive_review_max = 94;
+          filter.review_ratio_min = 0.0;
+          break;
+      }
+      switch (obj.review_selection_max) {
+        case 2:
+          filter.review_ratio_max = 0.95;
+          break;
+        case 3:
+          filter.positive_review_max = 49;
+          break;
+        case 4:
+          filter.review_ratio_max = 0.79;
+          break;
+        case 5:
+          filter.review_ratio_max = 0.69;
+          break;
+        case 6:
+          filter.review_ratio_max = 0.39;
+          break;
+        case 7:
+          filter.review_ratio_max = 0.19;
+          filter.positive_review_min = 2;
+          break;
+        case 8:
+          filter.review_ratio_max = 0.19;
+          filter.positive_review_min = 9;
+          break;
+        case 9:
+          filter.review_ratio_max = 0.19;
+          filter.positive_review_min = 95;
+          break;
+      }
+    } else if (obj.review_tab === "advanced") {
+      if (obj.positive_min) filter.positive_review_min = obj.positive_min;
+      if (obj.positive_max) filter.positive_review_max = obj.positive_max;
+      if (obj.positive_min && obj.negative_min) filter.review_ratio_min = obj.positive_min / (obj.positive_min + obj.negative_min);
+      if (obj.positive_max && obj.negative_max) filter.review_ratio_max = obj.positive_max / (obj.positive_max + obj.negative_max);
+    }
+    return filter;
+  }
+
   async mountContent() {
     const container = document.createElement("div");
 
@@ -112,11 +190,13 @@ export default class GamePage extends BasePage {
     }
 
     try {
+      const filter = await this.filterBuilder(JSON.parse(localStorage.getItem("settings") ?? "{}"));
+
       const gameInfo = await fetch("/api/game/recommend", {
         method: "POST",
         body: JSON.stringify({
           exclude: [],
-          filter: {},
+          filter: filter,
         }),
         headers: {
           "Content-Type": "application/json"
