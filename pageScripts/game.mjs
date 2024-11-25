@@ -9,46 +9,46 @@ async function templateHandler(originalText, templateObj) {
 
 const ReviewSummaryEnum = {
   0: {
-    code: 'overwhelmingly-positive',
-    ko: "압도적으로 긍정적"
+    code: "overwhelmingly-positive",
+    ko: "압도적으로 긍정적",
   },
   1: {
-    code: 'very-positive',
-    ko: "매우 긍정적"
+    code: "very-positive",
+    ko: "매우 긍정적",
   },
   2: {
-    code: 'positive',
-    ko: '긍정적'
+    code: "positive",
+    ko: "긍정적",
   },
   3: {
-    code: 'mostly-positive',
-    ko: "대체로 긍정적"
+    code: "mostly-positive",
+    ko: "대체로 긍정적",
   },
   4: {
-    code: 'mixed',
-    ko: "복합적"
+    code: "mixed",
+    ko: "복합적",
   },
   5: {
-    code: 'mostly-negative',
-    ko: "대체로 부정적"
+    code: "mostly-negative",
+    ko: "대체로 부정적",
   },
   6: {
-    code: 'negative',
-    ko: '부정적'
+    code: "negative",
+    ko: "부정적",
   },
   7: {
-    code: 'very-negative',
-    ko: "매우 부정적"
+    code: "very-negative",
+    ko: "매우 부정적",
   },
   8: {
-    code: 'overwhelmingly-negative',
-    ko: '압도적으로 부정적'
+    code: "overwhelmingly-negative",
+    ko: "압도적으로 부정적",
   },
   9: {
-    code: 'none',
-    ko: '-'
-  }
-}
+    code: "none",
+    ko: "-",
+  },
+};
 
 async function reviewSummary(reviewRatio, reviewCount) {
   if (reviewCount < 10) return 9;
@@ -82,8 +82,18 @@ async function reviewSummary(reviewRatio, reviewCount) {
 export default class GamePage extends BasePage {
   constructor() {
     super("game", "Game - Steambus", {
-      preventState: true
-    })
+      preventState: true,
+    });
+  }
+
+  static HistoryKey = "history";
+
+  async pushHistory(gameJson) {
+    const existingHistory = JSON.parse(
+      localStorage.getitem(GamePage.HistoryKey) ?? "[]",
+    );
+    existingHistory.push(gameJson);
+    localStorage.setItem(GamePage.HistoryKey, JSON.stringify(existingHistory));
   }
 
   async filterBuilder(obj) {
@@ -158,8 +168,12 @@ export default class GamePage extends BasePage {
     } else if (obj.review_tab === "advanced") {
       if (obj.positive_min) filter.positive_review_min = obj.positive_min;
       if (obj.positive_max) filter.positive_review_max = obj.positive_max;
-      if (obj.positive_min && obj.negative_min) filter.review_ratio_min = obj.positive_min / (obj.positive_min + obj.negative_min);
-      if (obj.positive_max && obj.negative_max) filter.review_ratio_max = obj.positive_max / (obj.positive_max + obj.negative_max);
+      if (obj.positive_min && obj.negative_min)
+        filter.review_ratio_min =
+          obj.positive_min / (obj.positive_min + obj.negative_min);
+      if (obj.positive_max && obj.negative_max)
+        filter.review_ratio_max =
+          obj.positive_max / (obj.positive_max + obj.negative_max);
     }
     return filter;
   }
@@ -178,19 +192,30 @@ export default class GamePage extends BasePage {
     }
 
     async function NotFoundHandler() {
-      await ErrorDescriptionHandler("404", "필터에 맞는 게임을 찾을 수 없습니다. 더 많은 게임이 포함되도록 필터를 조정하고 다시 시도해보세요.");
+      await ErrorDescriptionHandler(
+        "404",
+        "필터에 맞는 게임을 찾을 수 없습니다. 더 많은 게임이 포함되도록 필터를 조정하고 다시 시도해보세요.",
+      );
     }
 
     async function TooManyRequestHandler() {
-      await ErrorDescriptionHandler("429", "짧은 시간에 너무 많은 요청이 시도되었습니다. 조금 뒤 다시 시도해주세요.");
+      await ErrorDescriptionHandler(
+        "429",
+        "짧은 시간에 너무 많은 요청이 시도되었습니다. 조금 뒤 다시 시도해주세요.",
+      );
     }
 
     async function UnexpectedErrorHandler(code) {
-      await ErrorDescriptionHandler(`${code}`, "알 수 없는 오류가 발생했습니다. 관리자에게 문의하거나 조금 뒤에 다시 시도해보세요.");
+      await ErrorDescriptionHandler(
+        `${code}`,
+        "알 수 없는 오류가 발생했습니다. 관리자에게 문의하거나 조금 뒤에 다시 시도해보세요.",
+      );
     }
 
     try {
-      const filter = await this.filterBuilder(JSON.parse(localStorage.getItem("settings") ?? "{}"));
+      const filter = await this.filterBuilder(
+        JSON.parse(localStorage.getItem("settings") ?? "{}"),
+      );
 
       const gameInfo = await fetch("/api/game/recommend", {
         method: "POST",
@@ -199,9 +224,9 @@ export default class GamePage extends BasePage {
           filter: filter,
         }),
         headers: {
-          "Content-Type": "application/json"
-        }
-      })
+          "Content-Type": "application/json",
+        },
+      });
 
       if (!gameInfo.ok) {
         switch (gameInfo.status) {
@@ -247,22 +272,29 @@ export default class GamePage extends BasePage {
        * }
        */
       const gameInfoJson = await gameInfo.json();
-      const reviewInfo = await reviewSummary(gameInfoJson.review.ratio, gameInfoJson.review.positive + gameInfoJson.review.negative);
-      container.innerHTML = await fetch(`/pageScripts/game.html`).then(async res => await templateHandler(await res.text(), {
-        genres: gameInfoJson.genres.join(', '),
-        title: gameInfoJson.title,
-        app_id: gameInfoJson.app_id,
-        description: gameInfoJson.description,
-        thumbnail_src: gameInfoJson.thumbnail_src,
-        current_player: gameInfoJson.player_count.latest?.count || '-',
-        peak_player: gameInfoJson.player_count.peak?.count || '-',
-        owner_min: gameInfoJson.owner_min,
-        release_date: gameInfoJson.release_date,
-        review_summary_ko: ReviewSummaryEnum[reviewInfo].ko,
-        review_summary_code: ReviewSummaryEnum[reviewInfo].code,
-        review_positive: gameInfoJson.review.positive,
-        review_negative: gameInfoJson.review.negative,
-      }));
+      await this.pushHistory(gameInfoJson);
+      const reviewInfo = await reviewSummary(
+        gameInfoJson.review.ratio,
+        gameInfoJson.review.positive + gameInfoJson.review.negative,
+      );
+      container.innerHTML = await fetch(`/pageScripts/game.html`).then(
+        async (res) =>
+          await templateHandler(await res.text(), {
+            genres: gameInfoJson.genres.join(", "),
+            title: gameInfoJson.title,
+            app_id: gameInfoJson.app_id,
+            description: gameInfoJson.description,
+            thumbnail_src: gameInfoJson.thumbnail_src,
+            current_player: gameInfoJson.player_count.latest?.count || "-",
+            peak_player: gameInfoJson.player_count.peak?.count || "-",
+            owner_min: gameInfoJson.owner_min,
+            release_date: gameInfoJson.release_date,
+            review_summary_ko: ReviewSummaryEnum[reviewInfo].ko,
+            review_summary_code: ReviewSummaryEnum[reviewInfo].code,
+            review_positive: gameInfoJson.review.positive,
+            review_negative: gameInfoJson.review.negative,
+          }),
+      );
     } catch (e) {
       console.error(e);
       await UnexpectedErrorHandler("클라이언트 오류");
