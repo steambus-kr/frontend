@@ -275,6 +275,8 @@ div.logo {
     align-items: center;
     gap: 4px;
 
+    user-select: none;
+
     & > svg {
         width: 38px;
         height: 38px;
