@@ -60,6 +60,55 @@ export default class SettingsPage extends BasePage {
     localStorage.setItem(SettingsPage.SETTINGS_KEY, JSON.stringify(this.settings));
   }
 
+  async setFormError(key, errorMsg) {
+    const input = this.inputs.find((input) => input.id === key);
+    input.setCustomValidity(errorMsg);
+  }
+
+  async validate(formDataObj) {
+    const errorResponse = {
+      ok: false,
+      errors: {}
+    }
+
+    function writeError(key, errorMsg) {
+      if (key in errorResponse.errors) { // 덮어쓰기 금지, 첫 에러만 표시
+        return;
+      }
+      errorResponse.errors[key] = errorMsg;
+    }
+
+    function UInt(key, value) {
+      if (isNaN(value)) {
+        writeError(key, "정수만 입력할 수 있습니다.")
+      } else if (value < 0) {
+        writeError(key, "값이 0보다 커야 합니다.")
+      }
+    }
+
+    const UIntKeys = [
+      "owner_min",
+      "player_min",
+      "player_max",
+      "positive_min",
+      "positive_max",
+      "negative_min",
+      "negative_max",
+    ]
+
+    for (const key of UIntKeys) {
+      const value = formDataObj[key];
+      if (value !== "") {
+        UInt(key, parseInt(value));
+      }
+    }
+
+    // min/max relative check
+    // tab validity check
+    // selection validity check
+    // positive/negative ratio check
+  }
+
   async mountContent() {
     /* HTML 로드 */
     const content = document.createElement("div");
@@ -168,6 +217,23 @@ export default class SettingsPage extends BasePage {
           errorMsg.innerText = "";
           errorMsg.classList.add("no-error")
         })
+      })
+    })();
+
+    /* SubmitEvent 핸들링 */
+    (() => {
+      const form = content.querySelector("form");
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const validationResult = await this.validate(Object.fromEntries(new FormData(form)));
+        if (!validationResult.ok) {
+          for (const [key, errorMsg] of Object.entries(validationResult.errors)) {
+            await this.setFormError(key, errorMsg);
+          }
+          form.reportValidity();
+          return;
+        }
+        // transform -> save
       })
     })();
 
