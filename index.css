@@ -276,6 +276,7 @@ div.logo {
     gap: 4px;
 
     user-select: none;
+    -webkit-user-select: none;
 
     & > svg {
         width: 38px;
