@@ -259,8 +259,42 @@
             color: var(--light-accent-foreground);
         }
         & > .review {
-            background-color: var(--mixed);
-            color: var(--mixed-foreground);
+            &.overwhelmingly-positive {
+                background-color: var(--overwhelmingly-positive);
+                color: var(--overwhelmingly-positive-foreground);
+            }
+            &.very-positive {
+                background-color: var(--very-positive);
+                color: var(--very-positive-foreground);
+            }
+            &.positive {
+                background-color: var(--positive);
+                color: var(--positive-foreground);
+            }
+            &.mostly-positive {
+                background-color: var(--mostly-positive);
+                color: var(--mostly-positive-foreground);
+            }
+            &.mixed {
+                background-color: var(--mixed);
+                color: var(--mixed-foreground);
+            }
+            &.mostly-negative {
+                background-color: var(--mostly-negative);
+                color: var(--mostly-negative-foreground);
+            }
+            &.negative {
+                background-color: var(--negative);
+                color: var(--negative-foreground);
+            }
+            &.very-negative {
+                background-color: var(--very-negative);
+                color: var(--very-negative-foreground);
+            }
+            &.overwhelmingly-negative {
+                background-color: var(--overwhelmingly-negative);
+                color: var(--overwhelmingly-negative-foreground);
+            }
         }
     }
 }
