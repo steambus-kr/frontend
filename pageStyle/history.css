@@ -62,8 +62,7 @@
             background-color: var(--light-background-alt);
             color: var(--light-foreground-alt);
 
-            --timing-function: cubic-bezier(0,0.1,.2,1);
-            transition: transform 400ms var(--timing-function), opacity 400ms var(--timing-function);
+            transition: var(--page-component-starting-transition);
             --index: 0;
             transition-delay: calc(var(--index) * 100ms);
 

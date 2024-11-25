@@ -64,6 +64,9 @@
     --font-bold: 700;
     --font-extrabold: 800;
     --font-black: 900;
+
+    --timing-function: cubic-bezier(0,0.1,.2,1);
+    --page-component-starting-transition: transform 400ms var(--timing-function), opacity 400ms var(--timing-function);
 }
 
 body {
