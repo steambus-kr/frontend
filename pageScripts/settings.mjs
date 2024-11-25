@@ -84,8 +84,42 @@ export default class SettingsPage extends BasePage {
     }
 
     const t = validator(writeError);
+    const e = validator(() => {});
 
     t("owner_min", formDataObj.owner_min).t(optional).t(uint);
+    t("player_min", formDataObj.player_min)
+      .t(optional)
+      .t(uint)
+      .t((player_min) => {
+        e("player_max", formDataObj.player_max)
+          .t(optional)
+          .t(uint)
+          .t((player_max) => {
+            if (player_min > player_max)
+              return {
+                ok: false,
+                message: "최소값은 최대값보다 작아야 합니다.",
+              };
+          });
+        return {
+          ok: true,
+        };
+      });
+    t("player_max", formDataObj.player_max)
+      .t(optional)
+      .t(uint)
+      .t((player_max) => {
+        e("player_min", formDataObj.player_min)
+          .t(optional)
+          .t(uint)
+          .t((player_min) => {
+            if (player_max < player_min)
+              return {
+                ok: false,
+                message: "최대값은 최소값보다 커야 합니다.",
+              };
+          });
+      });
 
     // min/max relative check
     // tab validity check
