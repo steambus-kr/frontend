@@ -138,7 +138,8 @@
                 color: var(--light-foreground-alt);
                 transition:
                         background-color var(--tab-transition-time) var(--tab-transition-timing-function),
-                        color var(--tab-transition-time) var(--tab-transition-timing-function);
+                        color var(--tab-transition-time) var(--tab-transition-timing-function),
+                        filter var(--tab-transition-time) var(--tab-transition-timing-function);
                 padding: 4px;
                 font-weight: var(--font-semibold);
                 &.selected {
