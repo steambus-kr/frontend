@@ -164,7 +164,9 @@ export default class SettingsPage extends BasePage {
             ),
           ];
         }
-        new Tab(tabs);
+        const input = content.querySelector('input[name="review_tab"]');
+        input.value = 'simple'
+        new Tab(tabs, input);
       }
     })();
 
@@ -286,9 +288,11 @@ class Tab {
    * @type {{ [tabId: toString]: [HTMLButtonElement, HTMLDivElement] }} [selectBtn, tabDiv]
    */
   tabs = {};
+  input;
 
-  constructor(tabs) {
+  constructor(tabs, input) {
     this.tabs = tabs;
+    this.input = input;
     this.applyEvents();
   }
 
@@ -296,6 +300,7 @@ class Tab {
     const onTabSelectBtnClick = (tabId) => (e) => {
       e.currentTarget.classList.add("selected");
       this.tabs[tabId][1].classList.add("selected");
+      this.input.value = tabId;
       for (const tabElementExceptThis of Object.entries(this.tabs)
         .filter(([_tabId]) => _tabId !== tabId)
         .map(([_, l]) => l)) {
