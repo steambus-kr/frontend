@@ -13,9 +13,23 @@ const reviewSelections = [
   '"압도적으로 부정적"'
 ]
 
+const initialState = {
+  owner_min: null,
+  player_min: null,
+  player_max: null,
+  review_tab: "simple",
+  review_selection_min: 0,
+  review_selection_max: 0,
+  positive_min: null,
+  positive_max: null,
+  negative_min: null,
+  negative_max: null,
+}
+
 export default class SettingsPage extends BasePage {
   static SETTINGS_KEY = "settings"
 
+  inputs = [];
   settings = {
     owner_min: null,
     player_min: null,
@@ -34,7 +48,12 @@ export default class SettingsPage extends BasePage {
   }
 
   async loadConfig() {
-    this.settings = JSON.parse(localStorage.getItem(SettingsPage.SETTINGS_KEY));
+    const dbSettings = JSON.parse(localStorage.getItem(SettingsPage.SETTINGS_KEY));
+    this.settings = dbSettings ?? initialState;
+    this.inputs.forEach((input) => {
+      const settingName = input.id;
+      input.value = this.settings[settingName] ?? "";
+    });
   }
 
   async saveConfig() {
@@ -45,6 +64,9 @@ export default class SettingsPage extends BasePage {
     /* HTML 로드 */
     const content = document.createElement("div");
     content.innerHTML = await fetch('/pageScripts/settings.html').then(r => r.text());
+
+    this.inputs = Array.from(content.querySelectorAll("input,select,textarea"));
+    await this.loadConfig();
 
     /*** 변수 충돌 관리를 위한 클로저화 ***/
 
