@@ -112,7 +112,7 @@ export default class HistoryPage extends BasePage {
         thumbnail_src: historyItem.thumbnail_src,
         review_summary: ReviewSummaryEnum[reviewInfo].ko,
         review_total: historyItem.review.positive + historyItem.review.negative,
-        review_percentage: `${historyItem.review.ratio * 100}%`,
+        review_percentage: `${Math.round(historyItem.review.ratio * 10000) / 100}%`,
         history_datetime: new Intl.DateTimeFormat("ko", {}).format(
           new Date(historyItem.datetime),
         ),
