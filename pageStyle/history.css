@@ -42,8 +42,10 @@
         display: flex;
         flex-direction: column;
         gap: 8px;
+        overflow-x: clip;
 
         .history-item {
+            will-change: transform;
             width: 100%;
             height: 360px;
             display: flex;
