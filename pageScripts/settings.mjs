@@ -145,9 +145,6 @@ export default class SettingsPage extends BasePage {
       r.text(),
     );
 
-    this.inputs = Array.from(content.querySelectorAll("input,select,textarea"));
-    await this.loadConfig();
-
     /*** 변수 충돌 관리를 위한 클로저화 ***/
 
     /* 탭 기능 */
@@ -275,6 +272,9 @@ export default class SettingsPage extends BasePage {
         await this.saveConfig();
       });
     })();
+
+    this.inputs = Array.from(content.querySelectorAll("input,select,textarea"));
+    await this.loadConfig();
 
     return content;
   }
