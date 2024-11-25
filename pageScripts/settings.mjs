@@ -43,6 +43,7 @@ export default class SettingsPage extends BasePage {
     negative_min: null,
     negative_max: null,
   };
+  reviewTab;
 
   constructor() {
     super("settings", "Settings - Steambus");
@@ -52,8 +53,11 @@ export default class SettingsPage extends BasePage {
     const dbSettings = localStorage.getItem(SettingsPage.SETTINGS_KEY);
     this.settings = dbSettings ? JSON.parse(dbSettings) : initialState;
     this.inputs.forEach((input) => {
-      const settingName = input.id;
-      input.value = this.settings[settingName] ?? "";
+      const settingName = input.name;
+      if (settingName === 'review_tab') {
+        this.reviewTab.setTab(this.settings[settingName] ?? initialState.review_tab)
+      }
+      input.value = this.settings[settingName] ?? initialState[settingName] ?? "";
     });
   }
 
@@ -163,7 +167,7 @@ export default class SettingsPage extends BasePage {
         }
         const input = content.querySelector('input[name="review_tab"]');
         input.value = 'simple'
-        new Tab(tabs, input);
+        this.reviewTab = new Tab(tabs, input);
       }
     })();
 
@@ -296,21 +300,21 @@ class Tab {
     this.applyEvents();
   }
 
-  applyEvents() {
-    const onTabSelectBtnClick = (tabId) => (e) => {
-      e.currentTarget.classList.add("selected");
-      this.tabs[tabId][1].classList.add("selected");
-      this.input.value = tabId;
-      for (const tabElementExceptThis of Object.entries(this.tabs)
-        .filter(([_tabId]) => _tabId !== tabId)
-        .map(([_, l]) => l)) {
-        tabElementExceptThis[0].classList.remove("selected");
-        tabElementExceptThis[1].classList.remove("selected");
-      }
-    };
+  setTab(tabId) {
+    this.input.value = tabId;
+    this.tabs[tabId][0].classList.add("selected")
+    this.tabs[tabId][1].classList.add("selected");
+    for (const tabElementExceptThis of Object.entries(this.tabs)
+      .filter(([_tabId]) => _tabId !== tabId)
+      .map(([_, l]) => l)) {
+      tabElementExceptThis[0].classList.remove("selected");
+      tabElementExceptThis[1].classList.remove("selected");
+    }
+  }
 
+  applyEvents() {
     for (const [tabId, tabElement] of Object.entries(this.tabs)) {
-      tabElement[0].addEventListener("click", onTabSelectBtnClick(tabId));
+      tabElement[0].addEventListener("click", () => this.setTab(tabId));
     }
   }
 }
