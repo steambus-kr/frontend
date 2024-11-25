@@ -48,8 +48,8 @@ export default class SettingsPage extends BasePage {
   }
 
   async loadConfig() {
-    const dbSettings = JSON.parse(localStorage.getItem(SettingsPage.SETTINGS_KEY));
-    this.settings = dbSettings ?? initialState;
+    const dbSettings = localStorage.getItem(SettingsPage.SETTINGS_KEY);
+    this.settings = dbSettings ? JSON.parse(dbSettings) : initialState;
     this.inputs.forEach((input) => {
       const settingName = input.id;
       input.value = this.settings[settingName] ?? "";
