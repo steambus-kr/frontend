@@ -90,7 +90,7 @@ export default class GamePage extends BasePage {
 
   async pushHistory(gameJson) {
     const existingHistory = JSON.parse(
-      localStorage.getitem(GamePage.HistoryKey) ?? "[]",
+      localStorage.getItem(GamePage.HistoryKey) ?? "[]",
     );
     existingHistory.push(gameJson);
     localStorage.setItem(GamePage.HistoryKey, JSON.stringify(existingHistory));
