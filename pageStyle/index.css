@@ -43,10 +43,16 @@
         a {
             color: var(--light-primary);
             text-decoration: underline;
+
+            &:visited {
+                color: var(--light-primary);
+            }
         }
 
         font-size: 16px;
         font-weight: var(--font-light);
+        word-break: keep-all;
+        text-align:center;
     }
 
     hr {
