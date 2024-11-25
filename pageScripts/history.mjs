@@ -85,6 +85,40 @@ export default class HistoryPage extends BasePage {
     super("history", "History - Steambus");
   }
 
+  async removeFromHistory(appId) {
+    const historyItems = JSON.parse(localStorage.getItem("history") ?? "[]");
+    const newHistoryItems = historyItems.filter((item) => item.app_id !== appId);
+    localStorage.setItem("history", JSON.stringify(newHistoryItems));
+    const willBeRemoved = document.querySelector(
+      `.history-item[data-app_id="${appId}"]`,
+    );
+    const transitionBox = document.createElement('div');
+    transitionBox.classList.add('remove-transition-box');
+    const b = willBeRemoved.getBoundingClientRect()
+    transitionBox.style.setProperty(
+      '--width',
+      b.width + 'px'
+    )
+    transitionBox.style.setProperty(
+      '--height',
+      b.height + 'px',
+    )
+    willBeRemoved.insertAdjacentElement('afterend', transitionBox);
+    willBeRemoved.style.position = 'fixed';
+    willBeRemoved.style.top = `${b.y}px`;
+    willBeRemoved.style.left = `${b.x}px`;
+    willBeRemoved.style.width = `${b.width}px`;
+    willBeRemoved.style.height = `${b.height}px`;
+    willBeRemoved.classList.add("remove-transition")
+    document.querySelector(`.summary > span`).innerText = `${newHistoryItems.length}개 기록됨`;
+  }
+
+  async removeAll() {
+    localStorage.removeItem("history");
+    document.querySelectorAll(".history-item").forEach((item) => item.remove());
+    document.querySelector(`.summary > span`).innerText = `0개 기록됨`;
+  }
+
   async mountContent() {
     const historyItems = JSON.parse(localStorage.getItem("history") ?? "[]");
 
@@ -92,6 +126,9 @@ export default class HistoryPage extends BasePage {
     content.innerHTML = (
       await fetch("/pageScripts/history.html").then((r) => r.text())
     ).replace("{{history_length}}", historyItems.length);
+    content.querySelector("button.delete").addEventListener("click", () => {
+      this.removeAll()
+    })
 
     const historyItemHTML = await fetch("/pageScripts/history-item.html").then(
       (r) => r.text(),
@@ -106,6 +143,7 @@ export default class HistoryPage extends BasePage {
       const historyItemElement = document.createElement("article");
       historyItemElement.classList.add("history-item");
       historyItemElement.style.setProperty("--index", idx);
+      historyItemElement.dataset.app_id = historyItem.app_id;
       historyItemElement.innerHTML = await templateHandler(historyItemHTML, {
         title: historyItem.title,
         app_id: historyItem.app_id,
@@ -118,6 +156,9 @@ export default class HistoryPage extends BasePage {
           new Date(historyItem.datetime),
         ),
       });
+      historyItemElement.querySelector(`button.delete`).addEventListener("click", () => {
+        this.removeFromHistory(historyItem.app_id);
+      })
       historyContainer.appendChild(historyItemElement);
     }
 

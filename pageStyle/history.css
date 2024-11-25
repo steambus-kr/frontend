@@ -43,6 +43,20 @@
         flex-direction: column;
         gap: 8px;
         overflow-x: clip;
+        position: relative;
+
+        .remove-transition-box {
+            height: var(--height);
+            max-height: 0;
+
+            transition: max-height 400ms ease-out 200ms;
+
+            @starting-style {
+                width: var(--width);
+                height: var(--height);
+                max-height: var(--height);
+            }
+        }
 
         .history-item {
             will-change: transform;
@@ -71,6 +85,10 @@
             @starting-style {
                 transform: translateY(100%) scaleX(1.2) scaleY(1.1);
                 opacity: 0;
+            }
+
+            &.remove-transition {
+                transform: translateX(100vw);
             }
 
             .thumbnail {
