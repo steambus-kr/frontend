@@ -14,8 +14,31 @@ const reviewSelections = [
 ]
 
 export default class SettingsPage extends BasePage {
+  static SETTINGS_KEY = "settings"
+
+  settings = {
+    owner_min: null,
+    player_min: null,
+    player_max: null,
+    review_tab: "simple",
+    review_selection_min: 0,
+    review_selection_max: 0,
+    positive_min: null,
+    positive_max: null,
+    negative_min: null,
+    negative_max: null,
+  }
+
   constructor() {
     super("settings", "Settings - Steambus");
+  }
+
+  async loadConfig() {
+    this.settings = JSON.parse(localStorage.getItem(SettingsPage.SETTINGS_KEY));
+  }
+
+  async saveConfig() {
+    localStorage.setItem(SettingsPage.SETTINGS_KEY, JSON.stringify(this.settings));
   }
 
   async mountContent() {
