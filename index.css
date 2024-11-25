@@ -76,8 +76,12 @@ body {
 
     display: flex;
     flex-direction: column;
+    width: 100vw;
+    max-width: 100%;
     min-height: 100vh;
     padding-bottom: 60px;
+    transform: translateZ(0); /* W3C 일 안함?
+    https://stackoverflow.com/questions/16687023/bug-with-transform-scale-and-overflow-hidden-in-chrome */
 
     overflow-x: hidden;
 }
