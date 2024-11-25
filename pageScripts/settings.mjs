@@ -256,6 +256,41 @@ export default class SettingsPage extends BasePage {
       });
     })();
 
+    /* review_ratio 계산 */
+    (() => {
+      const positiveMin = content.querySelector("input#positive_min");
+      const positiveMax = content.querySelector("input#positive_max");
+      const negativeMin = content.querySelector("input#negative_min");
+      const negativeMax = content.querySelector("input#negative_max");
+      const reviewRatio = content.querySelector("#review_ratio");
+      function minRatioCalc() {
+        let ratio ;
+        if (positiveMin.value === "" || negativeMin.value === "") {
+          ratio = "-";
+        } else {
+          const positiveMinValue = parseInt(positiveMin.value);
+          const negativeMinValue = parseInt(negativeMin.value);
+          ratio = Math.round(positiveMinValue / (positiveMinValue + negativeMinValue) * 100) / 100;
+        }
+        reviewRatio.querySelector('li:first-child > span').innerText = ratio.toString();
+      }
+      function maxRatioCalc() {
+        let ratio ;
+        if (positiveMax.value === "" || negativeMax.value === "") {
+          ratio = "-";
+        } else {
+          const positiveMaxValue = parseInt(positiveMax.value);
+          const negativeMaxValue = parseInt(negativeMax.value);
+          ratio = Math.round(positiveMaxValue / (positiveMaxValue + negativeMaxValue) * 100) / 100;
+        }
+        reviewRatio.querySelector('li:last-child > span').innerText = ratio.toString();
+      }
+      positiveMin.addEventListener("input", minRatioCalc);
+      positiveMax.addEventListener("input", maxRatioCalc);
+      negativeMin.addEventListener("input", minRatioCalc);
+      negativeMax.addEventListener("input", maxRatioCalc);
+    })();
+
     /* SubmitEvent 핸들링 */
     (() => {
       const form = content.querySelector("form");
