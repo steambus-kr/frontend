@@ -99,23 +99,23 @@
                 align-items: flex-start;
                 gap: 16px;
 
+                header {
+                    width: 100%;
+                }
+
                 .genres {
                     font-size: 12px;
                     font-weight: var(--font-light);
                     opacity: 1;
                     overflow: hidden;
-                    display: -webkit-box;
-                    -webkit-box-orient: vertical;
-                    -webkit-line-clamp: 1;
+                    text-overflow: ellipsis;
                 }
 
                 .title {
                     font-size: 20px;
                     font-weight: var(--font-medium);
                     overflow: hidden;
-                    display: -webkit-box;
-                    -webkit-box-orient: vertical;
-                    -webkit-line-clamp: 1;
+                    text-overflow: ellipsis;
                 }
             }
 
