@@ -45,6 +45,8 @@
         overflow-x: visible;
         position: relative;
 
+        /*noinspection CssUnresolvedCustomProperty*/
+
         .remove-transition-box {
             height: var(--height);
             max-height: 0;
