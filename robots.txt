@@ -3,5 +3,3 @@ Allow: /
 Disallow: /settings
 Disallow: /game
 Disallow: /history
-
-Sitemap: https://steambus.kr/sitemap.xml
