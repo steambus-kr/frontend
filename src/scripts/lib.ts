@@ -127,6 +127,13 @@ export default class BasePage {
   }
 
   /**
+   * HTML을 로드합니다.
+   */
+  async loadHTML(filename: string) {
+    return await fetch(`/pages/${filename}.html`).then((r) => r.text());
+  }
+
+  /**
    * 페이지를 마운트합니다.
    * 이벤트 순서는 다음과 같습니다
    *
