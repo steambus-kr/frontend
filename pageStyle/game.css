@@ -10,7 +10,7 @@
     gap: 8px;
     color: var(--light-foreground);
 
-    overflow-x: clip;
+    overflow-x: visible;
 
     /*** Error Page Style ***/
     &.error {
