@@ -8,11 +8,7 @@
     --light-primary: #4aa6ba;
     --light-secondary: #9690d5;
     --light-accent: #886bc7;
-    --light-text-gradient: linear-gradient(
-        90deg,
-        var(--light-primary) 0%,
-        var(--light-accent) 100%
-    );
+    --light-text-gradient: linear-gradient(90deg, var(--light-primary) 0%, var(--light-accent) 100%);
     --light-error-foreground: #f60000;
 
     --light-primary-foreground: #eaf7fa;
