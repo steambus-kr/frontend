@@ -1,4 +1,4 @@
-import BasePage from "../lib";
+import BasePage from "../lib.js";
 import type { IFilter, GameInfoResponse, IConfig } from "../types";
 
 async function templateHandler(originalText: string, templateObj: Record<string, string | number>) {

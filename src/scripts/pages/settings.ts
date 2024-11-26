@@ -1,7 +1,6 @@
-import BasePage from "../lib";
-import validator, {optional, uint} from "../validator";
+import BasePage from "../lib.js";
+import validator, {optional, uint} from "../validator.js";
 import type {IConfig, IFormConfig} from "../types";
-
 const reviewSelections = [
   "-",
   '"압도적으로 긍정적"',

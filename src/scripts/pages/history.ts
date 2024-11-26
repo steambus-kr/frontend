@@ -1,5 +1,5 @@
-import BasePage from "../lib";
-import type {GameInfoResponse} from "../types";
+import BasePage from "../lib.js";
+import type {GameInfoResponse} from "../types.js";
 
 async function templateHandler(originalText: string, templateObj: Record<string, string | number>) {
   let newText = originalText;
