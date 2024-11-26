@@ -1,4 +1,4 @@
-import BasePage from "../lib/base.mjs";
+import BasePage from "../lib.mjs";
 import validator, {optional, uint} from "../lib/validator.mjs";
 
 const reviewSelections = [

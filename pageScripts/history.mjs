@@ -1,4 +1,4 @@
-import BasePage from "../lib/base.mjs";
+import BasePage from "../lib.mjs";
 
 async function templateHandler(originalText, templateObj) {
   let newText = originalText;

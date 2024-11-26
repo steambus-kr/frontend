@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <meta name="robots" content="index, nofollow">
     <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/gh/jgthms/minireset.css@master/minireset.min.css"
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/jgthms/minireset.css@master/minireset.min.css"
     />
     <link
       rel="stylesheet"
@@ -131,10 +131,8 @@
         </a>
       </div>
     </nav>
-    <script src="/lib/linker.mjs" type="module"></script>
     <script type="module">
-      import {Linker} from "./lib/linker.mjs";
-      import pageMap from "./lib/pageMap.mjs";
+      import {Linker, pageMap} from "./lib.mjs";
       // noinspection ES6ConvertVarToLetConst
       var linker = new Linker();
       linker.overrideAnchor();

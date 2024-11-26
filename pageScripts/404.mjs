@@ -1,4 +1,4 @@
-import BasePage from "../lib/base.mjs";
+import BasePage from "../lib.mjs";
 
 export default class PageNotFoundPage extends BasePage {
   constructor() {
