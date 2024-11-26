@@ -124,16 +124,12 @@ export default class HistoryPage extends BasePage {
     const historyItems: (GameInfoResponse & {datetime: Date})[] = JSON.parse(localStorage.getItem("history") ?? "[]");
 
     const content = document.createElement("div");
-    content.innerHTML = (
-      await fetch("/pageScripts/history.html").then((r) => r.text())
-    ).replace("{{history_length}}", historyItems.length.toString());
+    content.innerHTML = await this.loadHTML().then(async (text) => text.replace("{{history_length}}", historyItems.length.toString()));
     (content.querySelector("button.delete") as HTMLButtonElement).addEventListener("click", () => {
       this.removeAll()
     })
 
-    const historyItemHTML = await fetch("/pageScripts/history-item.html").then(
-      (r) => r.text(),
-    );
+    const historyItemHTML = await this.loadHTML('item')
     const historyContainer = content.querySelector(".game-container") as HTMLElement;
 
     for (const [idx, historyItem] of Object.entries(historyItems)) {

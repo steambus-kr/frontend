@@ -9,7 +9,7 @@ export default class PageNotFoundPage extends BasePage {
 
   async mountContent() {
     const content = document.createElement("div");
-    content.innerHTML = await this.loadHTML("404");
+    content.innerHTML = await this.loadHTML();
     return content;
   }
 

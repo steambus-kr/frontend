@@ -148,9 +148,7 @@ export default class SettingsPage extends BasePage {
   async mountContent() {
     /* HTML 로드 */
     const content = document.createElement("div");
-    content.innerHTML = await fetch("/pageScripts/settings.html").then((r) =>
-      r.text(),
-    );
+    content.innerHTML = await this.loadHTML();
 
     /*** 변수 충돌 관리를 위한 클로저화 ***/
 

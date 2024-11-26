@@ -7,7 +7,7 @@ export default class IndexPage extends BasePage {
 
   async mountContent() {
     const content = document.createElement("div");
-    content.innerHTML = await this.loadHTML("index");
+    content.innerHTML = await this.loadHTML();
     return content;
   }
 

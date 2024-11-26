@@ -129,8 +129,8 @@ export default class BasePage {
   /**
    * HTML을 로드합니다.
    */
-  async loadHTML(filename: string) {
-    return await fetch(`/pages/${filename}.html`).then((r) => r.text());
+  async loadHTML(variation?: string) {
+    return await fetch(`/pages/${this.pageId}${variation ? `-${variation}` : ''}.html`).then((r) => r.text());
   }
 
   /**

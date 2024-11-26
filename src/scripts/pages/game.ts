@@ -253,9 +253,9 @@ export default class GamePage extends BasePage {
         gameInfoJson.review.ratio,
         gameInfoJson.review.positive + gameInfoJson.review.negative,
       );
-      container.innerHTML = await fetch(`/pageScripts/game.html`).then(
-        async (res) =>
-          await templateHandler(await res.text(), {
+      container.innerHTML = await this.loadHTML().then(
+        async (text) =>
+          await templateHandler(text, {
             genres: gameInfoJson.genres.join(", "),
             title: gameInfoJson.title,
             app_id: gameInfoJson.app_id,
