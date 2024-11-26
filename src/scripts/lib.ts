@@ -239,6 +239,7 @@ export class LoadingPage extends BasePage {
     path.setAttribute("fill", "currentColor");
     path.setAttribute("d", "M12 4V2A10 10 0 0 0 2 12h2a8 8 0 0 1 8-8")
     svg.appendChild(path);
+    loading.appendChild(svg);
     return loading;
   }
 
