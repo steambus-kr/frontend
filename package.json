@@ -4,5 +4,8 @@
   "devDependencies": {
     "minify": "^12.0.0",
     "prettier": "^3.3.3"
+  },
+  "dependencies": {
+    "typescript": "^5.7.2"
   }
 }
