@@ -269,7 +269,7 @@ export class Linker {
    * @param href
    */
   resolveScriptPath(href: keyof typeof pageMap) {
-    let base = "/pages";
+    let base = "/scripts/pages";
     if (!Object.keys(pageMap).includes(href))
       throw new Error(`Link Not Found (${href})`);
     return `${base}/${pageMap[href]}`;
