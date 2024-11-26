@@ -14,7 +14,7 @@
       crossorigin
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
     />
-    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="./index.css" />
     <title>스팀버스</title>
     <meta name="description" content="커스터마이징 가능한 스팀 게임 랜덤 추천 시스템을 경험해보세요.">
   </head>
@@ -132,7 +132,7 @@
       </div>
     </nav>
     <script type="module">
-      import {Linker, pageMap} from "./lib.mjs";
+      import {Linker, pageMap} from "./scripts/lib.js";
       // noinspection ES6ConvertVarToLetConst
       var linker = new Linker();
       linker.overrideAnchor();

@@ -1,7 +1,7 @@
 # replace url on production
 http://localhost:8000 {
 	# replace root on production
-	root * /home/swpark/WebstormProjects/steambus-frontend
+	root * /home/swpark/WebstormProjects/steambus-frontend/dist
 
 	handle /api/* {
 		reverse_proxy http://127.0.0.1:3000
