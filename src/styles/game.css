@@ -87,8 +87,9 @@
             }
 
             &.img-loading {
-                background-image: radial-gradient(circle at center, var(--background-radial-ping-color) 0%, var(--background-radial-ping-color) var(--background-radial-ping-startpoint), var(--light-background) var(--background-radial-ping-endpoint), var(--light-background) 100%);
-                animation: background-radial-ping 500ms infinite;
+                --background-radial-ping-color: rgba(0, 0, 0, var(--background-radial-ping-opacity));
+                background-image: radial-gradient(circle at center, var(--background-radial-ping-color) 0%, var(--background-radial-ping-color) var(--background-radial-ping-startpoint), transparent var(--background-radial-ping-endpoint), transparent 100%);
+                animation: background-radial-ping 1s infinite ease-in-out;
             }
         }
 
