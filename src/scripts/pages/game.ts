@@ -81,8 +81,8 @@ async function reviewSummary(reviewRatio: number, reviewCount: number) {
 }
 
 export default class GamePage extends BasePage {
-  constructor() {
-    super("game", "Game - Steambus", {
+  constructor(index: number) {
+    super("game", "Game - Steambus", index, {
       preventState: true,
     });
   }

@@ -75,6 +75,7 @@ interface BasePageUnmountEvent {
 export default class BasePage {
   pageId: string;
   pageTitle: string;
+  pageIndex: number;
   pageRoot: HTMLElement | null = null;
   config: {
     loadCSS: boolean;
@@ -87,7 +88,7 @@ export default class BasePage {
 
   mountQueue: MountQueue = new MountQueue();
 
-  constructor(pageId: string, pageTitle: string, config?: Partial<typeof this.config>) {
+  constructor(pageId: string, pageTitle: string, pageIndex: number, config?: Partial<typeof this.config>) {
     this.pageId = pageId;
     this.pageTitle = pageTitle;
     this.config = {
@@ -97,6 +98,7 @@ export default class BasePage {
       preventState: false,
       ...(config ?? {}),
     };
+    this.pageIndex = pageIndex;
   }
 
   isMounted() {
@@ -123,6 +125,7 @@ export default class BasePage {
     const style = document.createElement("style");
     style.id = `stylesheet-${this.pageId}`;
     style.innerHTML = cssText;
+    style.dataset.index = this.pageIndex.toString();
     this.mountQueue.addElement(style, document.head)
   }
 
@@ -157,8 +160,9 @@ export default class BasePage {
     if (!this.config.skipPageClass) {
       this.pageRoot.classList.add("page");
     }
+    this.pageRoot.dataset.index = this.pageIndex.toString();
     this.mountQueue.addElement(this.pageRoot);
-    evtCtl && evtCtl.dispatch("contentready", {});
+    !this.revokeEvent && evtCtl && evtCtl.dispatch("contentready", {});
 
     if (!this.revokeEvent) {
       this.mountQueue.buildQueue();
@@ -223,7 +227,7 @@ export default class BasePage {
 
 export class LoadingPage extends BasePage {
   constructor() {
-    super("loading", "Steambus", {
+    super("loading", "Steambus", -1, {
       loadCSS: false,
       skipPageClass: true,
     })
@@ -291,7 +295,7 @@ export class Linker {
         await this.loadingPage.mount();
       }
 
-      const page = new Page(searchParam);
+      const page = new Page(this.pageRef.length, searchParam);
       this.pageRef.push(page);
       if (!page.preventState) {
         window.history.pushState({}, "", href);
@@ -299,6 +303,14 @@ export class Linker {
 
       const e = new EventController<BasePageMountEvent>();
       e.on("contentready", async () => {
+        /* 페이지가 이미 있을 경우 unmount */
+        document.querySelectorAll('#root > div.page').forEach((el) => {
+          const pageIndex = parseInt((el as HTMLDivElement).dataset.index ?? '-1');
+          if (pageIndex < 0 || pageIndex > this.pageRef.length - 1) el.remove();
+          this.pageRef[pageIndex]!.unmount();
+        })
+
+        /* 언마운트 및 페이지 내 앵커 이벤트 오버라이딩 */
         await this.loadingPage.unmount();
         this.overrideAnchor(page.pageRoot);
       })

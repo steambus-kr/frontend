@@ -1,8 +1,8 @@
 import BasePage from "../lib.js";
 
 export default class PageNotFoundPage extends BasePage {
-  constructor() {
-    super("404", "Page Not Found - Steambus", {
+  constructor(index: number) {
+    super("404", "Page Not Found - Steambus", index, {
       preventState: true
     });
   }

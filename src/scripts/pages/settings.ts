@@ -45,8 +45,8 @@ export default class SettingsPage extends BasePage {
   };
   reviewTab: Tab | null = null;
 
-  constructor() {
-    super("settings", "Settings - Steambus");
+  constructor(index: number) {
+    super("settings", "Settings - Steambus", index);
   }
 
   async loadConfig() {

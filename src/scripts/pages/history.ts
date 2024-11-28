@@ -82,8 +82,8 @@ async function reviewSummary(reviewRatio: number, reviewCount: number) {
 }
 
 export default class HistoryPage extends BasePage {
-  constructor() {
-    super("history", "History - Steambus");
+  constructor(index: number) {
+    super("history", "History - Steambus", index);
   }
 
   async removeFromHistory(appId: number) {

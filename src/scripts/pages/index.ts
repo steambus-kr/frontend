@@ -1,8 +1,8 @@
 import BasePage from "../lib.js";
 
 export default class IndexPage extends BasePage {
-  constructor() {
-    super("index", "Steambus");
+  constructor(index: number) {
+    super("index", "Steambus", index);
   }
 
   async mountContent() {
