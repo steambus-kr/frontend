@@ -99,6 +99,12 @@
                 flex-shrink: 0;
                 border-radius: 8px;
                 overflow: hidden;
+                display: flex;
+                flex-direction: column;
+                font-size: 16px;
+                justify-content: center;
+                align-items: center;
+                gap: 16px;
 
                 @media (min-width: 600px) {
                     width: 30%;
@@ -109,6 +115,32 @@
                     width: 100%;
                     height: 100%;
                     object-fit: cover;
+                }
+
+                &.img-loading {
+                    --background-radial-ping-color: rgba(0, 0, 0, var(--background-radial-ping-opacity));
+                    background-image: radial-gradient(circle at center, var(--background-radial-ping-color) 0%, var(--background-radial-ping-color) var(--background-radial-ping-startpoint), transparent var(--background-radial-ping-endpoint), transparent 100%);
+                    animation: background-radial-ping 1s infinite ease-in-out;
+                }
+
+                & div.fail {
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 16px;
+                    font-size: 16px;
+
+                    & > svg {
+                        width: 2em;
+                        height: 2em;
+                    }
+
+                    & > span {
+                        word-break: keep-all;
+                    }
                 }
             }
 

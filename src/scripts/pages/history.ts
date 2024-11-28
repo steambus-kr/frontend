@@ -159,7 +159,6 @@ export default class HistoryPage extends BasePage {
         title: historyItem.title,
         app_id: historyItem.app_id,
         genres: historyItem.genres.join(", "),
-        thumbnail_src: historyItem.thumbnail_src,
         review_summary: ReviewSummaryEnum[reviewInfo].ko,
         review_total: historyItem.review.positive + historyItem.review.negative,
         review_percentage: `${Math.round(historyItem.review.ratio * 10000) / 100}%`,
@@ -167,6 +166,26 @@ export default class HistoryPage extends BasePage {
           new Date(historyItem.datetime),
         ),
       });
+      const thumbnailContainer = historyItemElement.querySelector("div.thumbnail")!;
+      function thumbnailFailure() {
+        const failureContainer = document.createElement("div");
+        failureContainer.classList.add("fail");
+        failureContainer.innerHTML = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"32\" viewBox=\"0 0 48 48\"><path fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"4\" d=\"M10 44h28a2 2 0 0 0 2-2V14H30V4H10a2 2 0 0 0-2 2v36a2 2 0 0 0 2 2M30 4l10 10m-22 8l12 12m0-12L18 34\"/></svg>"
+        const message = document.createElement("span");
+        message.innerText = "이미지를 불러올 수 없습니다."
+        failureContainer.appendChild(message);
+        thumbnailContainer.appendChild(failureContainer);
+      }
+      fetch(historyItem.thumbnail_src).then(async (r) => {
+        if (!r.ok) {
+          thumbnailFailure();
+        } else {
+          const i = document.createElement("img");
+          i.src = URL.createObjectURL(await r.blob())
+          thumbnailContainer.appendChild(i);
+        }
+        thumbnailContainer.classList.remove("img-loading");
+      }).catch(thumbnailFailure).finally(() => thumbnailContainer.classList.remove("img-loading"));
       (historyItemElement.querySelector(`button.delete`) as HTMLButtonElement).addEventListener("click", () => {
         this.removeFromHistory(historyItem.app_id);
       })
