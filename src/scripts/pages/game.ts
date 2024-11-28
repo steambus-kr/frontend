@@ -281,7 +281,6 @@ export default class GamePage extends BasePage {
         thumbnailContainer.appendChild(failureContainer);
       }
       fetch(gameInfoJson.thumbnail_src).then(async (r) => {
-        await new Promise((r) => setTimeout(r, 5000))
         if (!r.ok) {
           thumbnailFailure();
         } else {
