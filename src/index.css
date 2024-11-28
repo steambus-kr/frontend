@@ -1,39 +1,69 @@
 /* v.1 */
 :root {
     --light-foreground: #060e0f;
+    --light-foreground-dec: 6, 14, 15;
     --light-foreground-alt: #363e3f;
+    --light-foreground-alt-dec: 54, 62, 63;
     --light-border: #a6aeaf;
+    --light-border-dec: 166, 174, 175;
     --light-background: #fcfdfd;
+    --light-background-dec: 252, 253, 253;
     --light-background-alt: #c6cecf;
+    --light-background-alt-dec: 198, 206, 207;
     --light-primary: #4aa6ba;
+    --light-primary-dec: 74, 166, 186;
     --light-secondary: #9690d5;
+    --light-secondary-dec: 150, 144, 213;
     --light-accent: #886bc7;
+    --light-accent-dec: 136, 107, 199;
     --light-text-gradient: linear-gradient(90deg, var(--light-primary) 0%, var(--light-accent) 100%);
     --light-error-foreground: #f60000;
+    --light-error-foreground-dec: 246, 0, 0;
 
     --light-primary-foreground: #eaf7fa;
+    --light-primary-foreground-dec: 234, 247, 250;
     --light-secondary-foreground: #f6f5ff;
+    --light-secondary-foreground-dec: 246, 245, 255;
     --light-accent-foreground: #ede5ff;
+    --light-accent-foreground-dec: 237, 229, 255;
 
     --overwhelmingly-negative: #b60000;
+    --overwhelmingly-negative-dec: 182, 0, 0;
     --very-negative: #f60000;
+    --very-negative-dec: 246, 0, 0;
     --negative: #ff772d;
+    --negative-dec: 255, 119, 45;
     --mostly-negative: #ffb200;
+    --mostly-negative-dec: 255, 178, 0;
     --mixed: #fff200;
+    --mixed-dec: 255, 242, 0;
     --mostly-positive: #c6ff36;
+    --mostly-positive-dec: 198, 255, 54;
     --positive: #70ff69;
+    --positive-dec: 112, 255, 105;
     --very-positive: #0dff00;
+    --very-positive-dec: 13, 255, 0;
     --overwhelmingly-positive: #00d624;
+    --overwhelmingly-positive-dec: 0, 214, 36;
 
     --overwhelmingly-positive-foreground: #006c12;
+    --overwhelmingly-positive-foreground-dec: 0, 108, 18;
     --very-positive-foreground: #067e00;
+    --very-positive-foreground-dec: 6, 126, 0;
     --positive-foreground: #067900;
+    --positive-foreground-dec: 6, 121, 0;
     --mostly-positive-foreground: #4e6d00;
+    --mostly-positive-foreground-dec: 78, 109, 0;
     --mixed-foreground: #666600;
+    --mixed-foreground-dec: 102, 102, 0;
     --mostly-negative-foreground: #fff7e4;
+    --mostly-negative-foreground-dec: 255, 247, 228;
     --negative-foreground: #ffece2;
+    --negative-foreground-dec: 255, 236, 226;
     --very-negative-foreground: #ffd6d6;
+    --very-negative-foreground-dec: 255, 214, 214;
     --overwhelmingly-negative-foreground: #ffe4e4;
+    --overwhelmingly-negative-foreground-dec: 255, 228, 228;
 
     --font-family:
             "Pretendard Variable",
