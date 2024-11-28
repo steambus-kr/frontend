@@ -82,6 +82,8 @@ async function reviewSummary(reviewRatio: number, reviewCount: number) {
 }
 
 export default class HistoryPage extends BasePage {
+  historyItemElements: HTMLElement[] = [];
+
   constructor(index: number) {
     super("history", "History - Steambus", index);
   }
@@ -112,6 +114,19 @@ export default class HistoryPage extends BasePage {
     willBeRemoved.style.height = `${b.height}px`;
     willBeRemoved.classList.add("remove-transition");
     (document.querySelector(`.summary > span`) as HTMLSpanElement).innerText = `${newHistoryItems.length}개 기록됨`;
+    setTimeout(() => {
+      // after transition
+      willBeRemoved.remove();
+      transitionBox.remove();
+      this.historyItemElements = this.historyItemElements.filter((item) => item.dataset.app_id !== appId.toString());
+      void this.updateIndex()
+    }, 800)
+  }
+
+  async updateIndex() {
+    for (const [idx, historyItem] of Object.entries(this.historyItemElements)) {
+      historyItem.style.setProperty("--index", idx);
+    }
   }
 
   async removeAll() {
@@ -132,14 +147,13 @@ export default class HistoryPage extends BasePage {
     const historyItemHTML = await this.loadHTML('item')
     const historyContainer = content.querySelector(".game-container") as HTMLElement;
 
-    for (const [idx, historyItem] of Object.entries(historyItems)) {
+    for (const historyItem of historyItems) {
       const reviewInfo = await reviewSummary(
         historyItem.review.ratio,
         historyItem.review.positive + historyItem.review.negative,
       );
       const historyItemElement = document.createElement("article");
       historyItemElement.classList.add("history-item");
-      historyItemElement.style.setProperty("--index", idx);
       historyItemElement.dataset.app_id = historyItem.app_id.toString();
       historyItemElement.innerHTML = await templateHandler(historyItemHTML, {
         title: historyItem.title,
@@ -157,10 +171,13 @@ export default class HistoryPage extends BasePage {
         this.removeFromHistory(historyItem.app_id);
       })
       historyContainer.appendChild(historyItemElement);
+      this.historyItemElements.push(historyItemElement);
     }
 
     return content;
   }
 
-  async unmountContent() {}
+  async unmountContent() {
+    this.historyItemElements = [];
+  }
 }
