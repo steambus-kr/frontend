@@ -301,9 +301,13 @@ export default class SettingsPage extends BasePage {
       negativeMax.addEventListener("input", maxRatioCalc);
     })();
 
-    /* SubmitEvent 핸들링 */
+    /* Form Event 핸들링 */
     (() => {
       const form = content.querySelector("form") as HTMLFormElement;
+      form.addEventListener("reset", async (e) => {
+        e.preventDefault();
+        await this.loadConfig();
+      })
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
         const formDataObj = Object.fromEntries(new FormData(form)) as IFormConfig;
