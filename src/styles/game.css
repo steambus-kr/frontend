@@ -87,8 +87,8 @@
             }
 
             &.img-loading {
-                background-image: var(--background-radial-ping);
-                animation: ping 500ms infinite;
+                background-image: radial-gradient(circle at center, var(--background-radial-ping-color) 0%, var(--background-radial-ping-color) var(--background-radial-ping-startpoint), var(--light-background) var(--background-radial-ping-endpoint), var(--light-background) 100%);
+                animation: background-radial-ping 500ms infinite;
             }
         }
 
