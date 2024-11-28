@@ -1,34 +1,3 @@
-@property --image-ping-startpoint {
-    syntax: '<percentage>';
-    inherits: false;
-    initial-value: 0%;
-}
-
-@property --image-ping-endpoint {
-    syntax: '<percentage>';
-    inherits: false;
-    initial-value: 0%;
-}
-
-@property --image-ping-opacity {
-    syntax: '<percentage>';
-    inherits: false;
-    initial-value: 0%;
-}
-
-@keyframes ping {
-    from {
-        --image-ping-startpoint: 10%;
-        --image-ping-endpoint: 10%;
-        --image-ping-opacity: 50%;
-    }
-    to {
-        --image-ping-startpoint: 100%;
-        --image-ping-endpoint: 100%;
-        --image-ping-opacity: 5%;
-    }
-}
-
 .page {
     flex-grow: 1;
     display: flex;
@@ -118,8 +87,7 @@
             }
 
             &.img-loading {
-                --image-ping-color: rgba(var(--light-background-alt-dec), var(--image-ping-opacity));
-                background-image: radial-gradient(circle at center, var(--image-ping-color) 0%, var(--image-ping-color) var(--image-ping-startpoint), var(--light-background) var(--image-ping-endpoint), var(--light-background) 100%);
+                background-image: var(--background-radial-ping);
                 animation: ping 500ms infinite;
             }
         }

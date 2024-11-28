@@ -1,3 +1,34 @@
+@property --background-radial-ping-startpoint {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 0%;
+}
+
+@property --background-radial-ping-endpoint {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 0%;
+}
+
+@property --background-radial-ping-opacity {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 0%;
+}
+
+@keyframes background-radial-ping {
+    from {
+        --background-radial-ping-startpoint: 10%;
+        --background-radial-ping-endpoint: 10%;
+        --background-radial-ping-opacity: 50%;
+    }
+    to {
+        --background-radial-ping-startpoint: 100%;
+        --background-radial-ping-endpoint: 100%;
+        --background-radial-ping-opacity: 5%;
+    }
+}
+
 /* v.1 */
 :root {
     --light-foreground: #060e0f;
@@ -93,6 +124,8 @@
 
     --timing-function: cubic-bezier(0,0.1,.2,1);
     --page-component-starting-transition: transform 400ms var(--timing-function), opacity 400ms var(--timing-function);
+    --background-radial-ping-color: rgba(var(--light-background-alt-dec), var(--background-radial-ping-opacity));
+    --background-radial-ping: radial-gradient(circle at center, var(--background-radial-ping-color) 0%, var(--background-radial-ping-color) var(--background-radial-ping-startpoint), var(--light-background) var(--background-radial-ping-endpoint), var(--light-background) 100%);
 }
 
 body {
