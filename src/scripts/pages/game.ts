@@ -220,10 +220,7 @@ export default class GamePage extends BasePage {
 
       const gameInfo = await fetch("/api/game/recommend", {
         method: "POST",
-        body: JSON.stringify({
-          exclude: [],
-          filter: filter,
-        }),
+        body: JSON.stringify(filter),
         headers: {
           "Content-Type": "application/json",
         },
