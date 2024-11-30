@@ -1,7 +1,10 @@
 import BasePage from "../lib.js";
 import type { IFilter, GameInfoResponse, IConfig } from "../types";
 
-async function templateHandler(originalText: string, templateObj: Record<string, string | number>) {
+async function templateHandler(
+  originalText: string,
+  templateObj: Record<string, string | number>,
+) {
   for (const [key, value] of Object.entries(templateObj)) {
     originalText = originalText.replaceAll(`{{${key}}}`, value.toString());
   }
@@ -49,7 +52,7 @@ const ReviewSummaryEnum = {
     code: "none",
     ko: "-",
   },
-}
+};
 
 async function reviewSummary(reviewRatio: number, reviewCount: number) {
   if (reviewCount < 10) return 9;
@@ -169,6 +172,8 @@ export default class GamePage extends BasePage {
     } else if (obj.review_tab === "advanced") {
       if (obj.positive_min) filter.positive_review_min = obj.positive_min;
       if (obj.positive_max) filter.positive_review_max = obj.positive_max;
+      if (obj.negative_min) filter.negative_review_min = obj.negative_min;
+      if (obj.negative_max) filter.negative_review_max = obj.negative_max;
       if (obj.positive_min && obj.negative_min)
         filter.review_ratio_min =
           obj.positive_min / (obj.positive_min + obj.negative_min);
@@ -274,22 +279,26 @@ export default class GamePage extends BasePage {
       function thumbnailFailure() {
         const failureContainer = document.createElement("div");
         failureContainer.classList.add("fail");
-        failureContainer.innerHTML = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"32\" viewBox=\"0 0 48 48\"><path fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"4\" d=\"M10 44h28a2 2 0 0 0 2-2V14H30V4H10a2 2 0 0 0-2 2v36a2 2 0 0 0 2 2M30 4l10 10m-22 8l12 12m0-12L18 34\"/></svg>"
+        failureContainer.innerHTML =
+          '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 48 48"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M10 44h28a2 2 0 0 0 2-2V14H30V4H10a2 2 0 0 0-2 2v36a2 2 0 0 0 2 2M30 4l10 10m-22 8l12 12m0-12L18 34"/></svg>';
         const message = document.createElement("span");
-        message.innerText = "이미지를 불러올 수 없습니다."
+        message.innerText = "이미지를 불러올 수 없습니다.";
         failureContainer.appendChild(message);
         thumbnailContainer.appendChild(failureContainer);
       }
-      fetch(gameInfoJson.thumbnail_src).then(async (r) => {
-        if (!r.ok) {
-          thumbnailFailure();
-        } else {
-          const i = document.createElement("img");
-          i.src = URL.createObjectURL(await r.blob())
-          thumbnailContainer.appendChild(i);
-        }
-        thumbnailContainer.classList.remove("img-loading");
-      }).catch(thumbnailFailure).finally(() => thumbnailContainer.classList.remove("img-loading"))
+      fetch(gameInfoJson.thumbnail_src)
+        .then(async (r) => {
+          if (!r.ok) {
+            thumbnailFailure();
+          } else {
+            const i = document.createElement("img");
+            i.src = URL.createObjectURL(await r.blob());
+            thumbnailContainer.appendChild(i);
+          }
+          thumbnailContainer.classList.remove("img-loading");
+        })
+        .catch(thumbnailFailure)
+        .finally(() => thumbnailContainer.classList.remove("img-loading"));
     } catch (e) {
       console.error(e);
       await UnexpectedErrorHandler("클라이언트 오류");

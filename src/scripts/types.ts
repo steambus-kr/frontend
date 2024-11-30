@@ -30,22 +30,25 @@ export interface IFilter {
   player_max: number;
   positive_review_min: number;
   positive_review_max: number;
+  negative_review_min: number;
+  negative_review_max: number;
   review_ratio_min: number;
   review_ratio_max: number;
   genre: string;
 }
 
 export interface IConfig {
-  owner_min: number | null,
-  player_min: number | null,
-  player_max: number | null,
-  review_tab: "simple" | "advanced",
-  review_selection_min: number,
-  review_selection_max: number,
-  positive_min: number | null,
-  positive_max: number | null,
-  negative_min: number | null,
-  negative_max: number | null,
+  owner_min: number | null;
+  player_min: number | null;
+  player_max: number | null;
+  review_tab: "simple" | "advanced";
+  review_selection_min: number;
+  review_selection_max: number;
+  positive_min: number | null;
+  positive_max: number | null;
+  negative_min: number | null;
+  negative_max: number | null;
 }
 
 export type IFormConfig = Record<keyof IConfig, string>;
+
