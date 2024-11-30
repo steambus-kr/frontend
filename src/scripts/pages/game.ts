@@ -68,10 +68,10 @@ async function reviewSummary(reviewRatio: number, reviewCount: number) {
   if (reviewRatio >= 0.7) {
     return 3;
   }
-  if (reviewRatio >= 40) {
+  if (reviewRatio >= 0.4) {
     return 4;
   }
-  if (reviewRatio >= 20) {
+  if (reviewRatio >= 0.2) {
     return 5;
   }
   if (reviewCount >= 500) {
