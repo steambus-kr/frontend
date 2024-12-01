@@ -7,7 +7,7 @@
       <p class="error-msg no-error" data-for="owner_min"></p>
       <label class="as-input">
         <span>최소</span>
-        <input id="owner_min" name="owner_min" type="number">
+        <input id="owner_min" name="owner_min" type="number" />
         <span>명</span>
       </label>
     </div>
@@ -16,13 +16,13 @@
       <p class="error-msg no-error" data-for="player_min"></p>
       <label class="as-input">
         <span>최소</span>
-        <input id="player_min" name="player_min" type="number">
+        <input id="player_min" name="player_min" type="number" />
         <span>명</span>
       </label>
       <p class="error-msg no-error" data-for="player_max"></p>
       <label class="as-input">
         <span>최대</span>
-        <input id="player_max" name="player_max" type="number">
+        <input id="player_max" name="player_max" type="number" />
         <span>명</span>
       </label>
     </div>
@@ -30,9 +30,11 @@
   <fieldset>
     <legend>리뷰 관련 설정</legend>
     <div class="select-tab">
-      <button class="selected" data-tab-id="simple" type="button">간단 설정</button>
+      <button class="selected" data-tab-id="simple" type="button">
+        간단 설정
+      </button>
       <button data-tab-id="advanced" type="button">고급 설정</button>
-      <input type="hidden" name="review_tab" value="simple">
+      <input type="hidden" name="review_tab" value="simple" />
     </div>
     <div class="tab-content">
       <div class="selected" data-tab-id="simple">
@@ -41,12 +43,20 @@
           <p class="error-msg no-error" data-for="review_selection_min"></p>
           <label class="as-input">
             <span>최소</span>
-            <select id="review_selection_min" name="review_selection_min" class="review-selector"></select>
+            <select
+              id="review_selection_min"
+              name="review_selection_min"
+              class="review-selector"
+            ></select>
           </label>
           <p class="error-msg no-error" data-for="review_selection_max"></p>
           <label class="as-input">
             <span>최대</span>
-            <select id="review_selection_max" name="review_selection_max" class="review-selector"></select>
+            <select
+              id="review_selection_max"
+              name="review_selection_max"
+              class="review-selector"
+            ></select>
           </label>
         </div>
       </div>
@@ -56,13 +66,13 @@
           <p class="error-msg no-error" data-for="positive_min"></p>
           <label class="as-input">
             <span>최소</span>
-            <input id="positive_min" name="positive_min" type="number">
+            <input id="positive_min" name="positive_min" type="number" />
             <span>개</span>
           </label>
           <p class="error-msg no-error" data-for="positive_max"></p>
           <label class="as-input">
             <span>최대</span>
-            <input id="positive_max" name="positive_max" type="number">
+            <input id="positive_max" name="positive_max" type="number" />
             <span>개</span>
           </label>
         </div>
@@ -71,13 +81,13 @@
           <p class="error-msg no-error" data-for="negative_min"></p>
           <label class="as-input">
             <span>최소</span>
-            <input id="negative_min" name="negative_min" type="number">
+            <input id="negative_min" name="negative_min" type="number" />
             <span>개</span>
           </label>
           <p class="error-msg no-error" data-for="negative_max"></p>
           <label class="as-input">
             <span>최대</span>
-            <input id="negative_max" name="negative_max" type="number">
+            <input id="negative_max" name="negative_max" type="number" />
             <span>개</span>
           </label>
         </div>
@@ -91,7 +101,11 @@
     </div>
   </fieldset>
   <div class="control-container">
-    <button class="primary" type="submit">변경사항 저장</button>
-    <button class="ghost" type="reset">되돌리기</button>
+    <p class="control-noty save-ok">설정이 저장되었습니다.</p>
+    <div class="controls">
+      <button class="primary" type="submit">변경사항 저장</button>
+      <button class="ghost" type="reset">되돌리기</button>
+    </div>
   </div>
 </form>
+

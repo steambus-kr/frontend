@@ -1,6 +1,6 @@
 import BasePage from "../lib.js";
-import validator, {optional, uint} from "../validator.js";
-import type {IConfig, IFormConfig} from "../types";
+import validator, { optional, uint } from "../validator.js";
+import type { IConfig, IFormConfig } from "../types";
 const reviewSelections = [
   "-",
   '"압도적으로 긍정적"',
@@ -54,10 +54,16 @@ export default class SettingsPage extends BasePage {
     this.settings = dbSettings ? JSON.parse(dbSettings) : initialState;
     this.inputs.forEach((input) => {
       const settingName = input.name as keyof IConfig;
-      if (settingName === 'review_tab' && this.reviewTab) {
-        this.reviewTab.setTab(this.settings[settingName] ?? initialState.review_tab)
+      if (settingName === "review_tab" && this.reviewTab) {
+        this.reviewTab.setTab(
+          this.settings[settingName] ?? initialState.review_tab,
+        );
       }
-      input.value = (this.settings[settingName] ?? initialState[settingName] ?? "").toString();
+      input.value = (
+        this.settings[settingName] ??
+        initialState[settingName] ??
+        ""
+      ).toString();
     });
   }
 
@@ -76,7 +82,7 @@ export default class SettingsPage extends BasePage {
   async validate(formDataObj: IFormConfig) {
     const response: {
       ok: boolean;
-      errors: Record<string, string>
+      errors: Record<string, string>;
     } = {
       ok: true,
       errors: {},
@@ -96,29 +102,47 @@ export default class SettingsPage extends BasePage {
     t("owner_min", formDataObj.owner_min).t(optional).t(uint);
     const player_min_v = t("player_min", formDataObj.player_min)
       .t(optional)
-      .t(uint)
+      .t(uint);
     const player_max_v = t("player_max", formDataObj.player_max)
       .t(optional)
-      .t(uint)
-    if (player_min_v.ok && !player_min_v.break && player_max_v.ok && !player_max_v.break && parseInt(formDataObj.player_min) > parseInt(formDataObj.player_max)) {
+      .t(uint);
+    if (
+      player_min_v.ok &&
+      !player_min_v.break &&
+      player_max_v.ok &&
+      !player_max_v.break &&
+      parseInt(formDataObj.player_min) > parseInt(formDataObj.player_max)
+    ) {
       writeError("player_min", "최소값은 최대값보다 작아야 합니다.");
     }
     const positive_min_v = t("positive_min", formDataObj.positive_min)
       .t(optional)
-      .t(uint)
+      .t(uint);
     const positive_max_v = t("positive_max", formDataObj.positive_max)
       .t(optional)
-      .t(uint)
-    if (positive_min_v.ok && !positive_min_v.break && positive_max_v.ok && !positive_max_v.break && parseInt(formDataObj.positive_min) > parseInt(formDataObj.positive_max)) {
+      .t(uint);
+    if (
+      positive_min_v.ok &&
+      !positive_min_v.break &&
+      positive_max_v.ok &&
+      !positive_max_v.break &&
+      parseInt(formDataObj.positive_min) > parseInt(formDataObj.positive_max)
+    ) {
       writeError("positive_min", "최소값은 최대값보다 작아야 합니다.");
     }
     const negative_min_v = t("negative_min", formDataObj.negative_min)
       .t(optional)
-      .t(uint)
+      .t(uint);
     const negative_max_v = t("negative_max", formDataObj.negative_max)
       .t(optional)
-      .t(uint)
-    if (negative_min_v.ok && !negative_min_v.break && negative_max_v.ok && !negative_max_v.break && parseInt(formDataObj.negative_min) > parseInt(formDataObj.negative_max)) {
+      .t(uint);
+    if (
+      negative_min_v.ok &&
+      !negative_min_v.break &&
+      negative_max_v.ok &&
+      !negative_max_v.break &&
+      parseInt(formDataObj.negative_min) > parseInt(formDataObj.negative_max)
+    ) {
       writeError("negative_min", "최소값은 최대값보다 작아야 합니다.");
     }
 
@@ -128,7 +152,7 @@ export default class SettingsPage extends BasePage {
   async transform(formDataObj: IFormConfig): Promise<IConfig> {
     function nullOrNumber(value: string) {
       if (value === "") return null;
-      return parseInt(value)
+      return parseInt(value);
     }
 
     return {
@@ -142,7 +166,7 @@ export default class SettingsPage extends BasePage {
       positive_max: nullOrNumber(formDataObj.positive_max),
       negative_min: nullOrNumber(formDataObj.negative_min),
       negative_max: nullOrNumber(formDataObj.negative_max),
-    }
+    };
   }
 
   async mountContent() {
@@ -160,18 +184,18 @@ export default class SettingsPage extends BasePage {
         for (const tab of tabSelect.querySelectorAll("button")) {
           const tabId = tab.dataset.tabId;
           if (!tabId) continue;
-          const tabElement: HTMLDivElement | null | undefined = tabSelect.parentElement?.querySelector?.(
-            `.select-tab ~ .tab-content > div[data-tab-id="${tabId}"]`
-          )
+          const tabElement: HTMLDivElement | null | undefined =
+            tabSelect.parentElement?.querySelector?.(
+              `.select-tab ~ .tab-content > div[data-tab-id="${tabId}"]`,
+            );
           if (!tabElement) continue;
-            tabs[tabId] = [
-              tab,
-              tabElement,
-            ]
+          tabs[tabId] = [tab, tabElement];
         }
-        const input: HTMLInputElement | null = content.querySelector('input[name="review_tab"]');
+        const input: HTMLInputElement | null = content.querySelector(
+          'input[name="review_tab"]',
+        );
         if (input) {
-          input.value = 'simple'
+          input.value = "simple";
           this.reviewTab = new Tab(tabs, input);
         }
       }
@@ -197,8 +221,12 @@ export default class SettingsPage extends BasePage {
 
     /* 최대/최소 옵션 변경 */
     (() => {
-      const reviewMin = content.querySelector("select#review_selection_min") as HTMLSelectElement;
-      const reviewMax = content.querySelector("select#review_selection_max") as HTMLSelectElement;
+      const reviewMin = content.querySelector(
+        "select#review_selection_min",
+      ) as HTMLSelectElement;
+      const reviewMax = content.querySelector(
+        "select#review_selection_max",
+      ) as HTMLSelectElement;
 
       const reviewMinOptions = reviewMin.querySelectorAll("option");
       const reviewMaxOptions = reviewMax.querySelectorAll("option");
@@ -211,8 +239,8 @@ export default class SettingsPage extends BasePage {
           value === 0
             ? (option.disabled = false)
             : option.value !== "0" &&
-            parseInt(option.value) >= shouldDisabledRange[0] &&
-            parseInt(option.value) <= shouldDisabledRange[1]
+                parseInt(option.value) >= shouldDisabledRange[0] &&
+                parseInt(option.value) <= shouldDisabledRange[1]
               ? (option.disabled = true)
               : (option.disabled = false),
         );
@@ -226,8 +254,8 @@ export default class SettingsPage extends BasePage {
           value === 0
             ? (option.disabled = false)
             : option.value !== "0" &&
-            parseInt(option.value) >= shouldDisabledRange[0] &&
-            parseInt(option.value) <= shouldDisabledRange[1]
+                parseInt(option.value) >= shouldDisabledRange[0] &&
+                parseInt(option.value) <= shouldDisabledRange[1]
               ? (option.disabled = true)
               : (option.disabled = false),
         );
@@ -236,9 +264,12 @@ export default class SettingsPage extends BasePage {
 
     /* 모든 필드 validation시 오류 메시지 */
     (() => {
-      const inputs: NodeListOf<(HTMLInputElement | HTMLSelectElement)> = content.querySelectorAll("input,select");
+      const inputs: NodeListOf<HTMLInputElement | HTMLSelectElement> =
+        content.querySelectorAll("input,select");
       inputs.forEach((element) => {
-        const errorMsg = content.querySelector(`p[data-for="${element.id}"]`) as HTMLParagraphElement;
+        const errorMsg = content.querySelector(
+          `p[data-for="${element.id}"]`,
+        ) as HTMLParagraphElement;
         element.addEventListener("invalid", (e) => {
           const target = e.target as typeof element;
           e.preventDefault();
@@ -266,33 +297,51 @@ export default class SettingsPage extends BasePage {
 
     /* review_ratio 계산 */
     (() => {
-      const positiveMin = content.querySelector("input#positive_min") as HTMLInputElement;
-      const positiveMax = content.querySelector("input#positive_max") as HTMLInputElement;
-      const negativeMin = content.querySelector("input#negative_min") as HTMLInputElement;
-      const negativeMax = content.querySelector("input#negative_max") as HTMLInputElement;
+      const positiveMin = content.querySelector(
+        "input#positive_min",
+      ) as HTMLInputElement;
+      const positiveMax = content.querySelector(
+        "input#positive_max",
+      ) as HTMLInputElement;
+      const negativeMin = content.querySelector(
+        "input#negative_min",
+      ) as HTMLInputElement;
+      const negativeMax = content.querySelector(
+        "input#negative_max",
+      ) as HTMLInputElement;
       const reviewRatio = content.querySelector("#review_ratio") as HTMLElement;
       function minRatioCalc() {
-        let ratio ;
+        let ratio;
         if (positiveMin.value === "" || negativeMin.value === "") {
           ratio = "-";
         } else {
           const positiveMinValue = parseInt(positiveMin.value);
           const negativeMinValue = parseInt(negativeMin.value);
-          ratio = Math.round(positiveMinValue / (positiveMinValue + negativeMinValue) * 100) / 100;
+          ratio =
+            Math.round(
+              (positiveMinValue / (positiveMinValue + negativeMinValue)) * 100,
+            ) / 100;
         }
-        const reviewRatioTxt = reviewRatio.querySelector('li:first-child > span') as HTMLSpanElement;
-          reviewRatioTxt && (reviewRatioTxt.innerText = ratio.toString());
+        const reviewRatioTxt = reviewRatio.querySelector(
+          "li:first-child > span",
+        ) as HTMLSpanElement;
+        reviewRatioTxt && (reviewRatioTxt.innerText = ratio.toString());
       }
       function maxRatioCalc() {
-        let ratio ;
+        let ratio;
         if (positiveMax.value === "" || negativeMax.value === "") {
           ratio = "-";
         } else {
           const positiveMaxValue = parseInt(positiveMax.value);
           const negativeMaxValue = parseInt(negativeMax.value);
-          ratio = Math.round(positiveMaxValue / (positiveMaxValue + negativeMaxValue) * 100) / 100;
+          ratio =
+            Math.round(
+              (positiveMaxValue / (positiveMaxValue + negativeMaxValue)) * 100,
+            ) / 100;
         }
-        const reviewRatioTxt = reviewRatio.querySelector('li:last-child > span') as HTMLSpanElement;
+        const reviewRatioTxt = reviewRatio.querySelector(
+          "li:last-child > span",
+        ) as HTMLSpanElement;
         reviewRatioTxt && (reviewRatioTxt.innerText = ratio.toString());
       }
       positiveMin.addEventListener("input", minRatioCalc);
@@ -307,10 +356,12 @@ export default class SettingsPage extends BasePage {
       form.addEventListener("reset", async (e) => {
         e.preventDefault();
         await this.loadConfig();
-      })
+      });
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
-        const formDataObj = Object.fromEntries(new FormData(form)) as IFormConfig;
+        const formDataObj = Object.fromEntries(
+          new FormData(form),
+        ) as IFormConfig;
         const validationResult = await this.validate(formDataObj);
         if (!validationResult.ok) {
           for (const [key, errorMsg] of Object.entries(
@@ -323,6 +374,15 @@ export default class SettingsPage extends BasePage {
         }
         this.settings = await this.transform(formDataObj);
         await this.saveConfig();
+        const successNotification = content.querySelector(
+          "div.control-container .control-noty.save-ok",
+        );
+        if (successNotification) {
+          successNotification.classList.add("show");
+          setTimeout(() => {
+            successNotification.classList.remove("show");
+          }, 2000);
+        }
       });
     })();
 
@@ -351,7 +411,7 @@ class Tab {
 
   setTab(tabId: keyof typeof this.tabs) {
     this.input.value = tabId;
-    this.tabs[tabId][0].classList.add("selected")
+    this.tabs[tabId][0].classList.add("selected");
     this.tabs[tabId][1].classList.add("selected");
     for (const tabElementExceptThis of Object.entries(this.tabs)
       .filter(([_tabId]) => _tabId !== tabId)
