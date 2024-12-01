@@ -184,6 +184,14 @@ export default class GamePage extends BasePage {
     return filter;
   }
 
+  async excludeBuilder() {
+    const historyItems: (GameInfoResponse & { datetime: Date })[] = JSON.parse(
+      localStorage.getItem("history") ?? "[]",
+    );
+
+    return historyItems.map(({ app_id }) => app_id);
+  }
+
   async mountContent() {
     const container = document.createElement("div");
 
@@ -223,11 +231,13 @@ export default class GamePage extends BasePage {
         JSON.parse(localStorage.getItem("settings") ?? "{}"),
       );
 
+      const exclude = await this.excludeBuilder();
+
       const gameInfo = await fetch("/api/game/recommend", {
         method: "POST",
         body: JSON.stringify({
-          exclude: [],
-          filter: filter,
+          exclude,
+          filter,
         }),
         headers: {
           "Content-Type": "application/json",
